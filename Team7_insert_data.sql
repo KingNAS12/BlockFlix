@@ -17,7 +17,7 @@ lastName, gender, dob, houseNumber, street, city, province, postalCode, paymentI
 VALUES
 
 ('C000001', 'Pass1234', '2026-06-01', 'john.smith@email.com','John', 'Smith', 'M', '1995-03-15',12345, '98 Ave NW', 'YEG', 'AB', 'T5J1A1', 'VISA1001', 5),
-('C000002', 'MovieFan1', '2026-06-01', 'tom.jones@email.com', 'Tom', 'Jones', 'M', '1998-07-22', 54321, '111 St SW', 'YEG', 'AB', 'T6W2B2', 'MC1002', 4),
+('C000002', 'MovieFan1', '2026-06-01', 'tom.jasper@email.com', 'Tom', 'Jasper', 'M', '1998-07-22', 54321, '111 St SW', 'YEG', 'AB', 'T6W2B2', 'MC1002', 4),
 ('C000003', 'Cinema88', '2026-06-01', 'dick.grayson@email.com', 'Dick', 'Grayson', 'M', '1989-11-10', 10001, '50 Ave NW', 'YEG', 'AB', 'T5K3C3', 'AMEX1003', 3),
 ('C000004', 'DramaKing', '2026-06-01', 'harry.osborn@email.com', 'Harry', 'Osborn', 'M', '2000-05-18', 22222, '75 St NW', 'YEG', 'AB', 'T5N4D4', 'VISA1004', 5),
 ('C000005', 'ActionGuy', '2026-06-01', 'danny.cross@email.com', 'Daniel', 'Cross', 'M', '1993-09-08', 33333, '82 Ave SW', 'YEG', 'AB', 'T6R5E5', 'MC1005', 4),
@@ -25,7 +25,7 @@ VALUES
 ('C000007', 'Blockflix7', '2026-06-01', 'bond007@email.com', 'James', 'Bond', 'M', '1985-12-12', 55555, '23 Ave NW', 'YEG', 'AB', 'T6K7G7', 'AMEX1007', 2),
 ('C000008', 'MovieBuff', '2026-06-01', 'ava.ayala@email.com', 'Ava', 'Ayala', 'F', '2001-04-02', 11111, '34 St SW', 'YEG', 'AB', 'T6X8H8', 'MC1008', 4),  
 ('C000009', 'RentalPro', '2026-06-01', 'ethan.hunt@email.com', 'Ethan', 'Thomas', 'M', '1990-08-25', 66666, '142 St NW', 'YEG', 'AB', 'T5P9J9', 'VISA1009', 3),
-('C000010', 'FilmLover', '2026-06-01', 'mia.anderson@email.com', 'Mia', 'Anderson', 'F', '1999-06-14', 77777, '87 Ave NW', 'YEG', 'AB', 'T6E1K1', 'MC1010', 5),
+('C000010', 'FilmLover', '2026-06-01', 'mia.queen@email.com', 'Mia', 'Queen', 'F', '1999-06-14', 77777, '87 Ave NW', 'YEG', 'AB', 'T6E1K1', 'MC1010', 5),
 
 ('C000011','xR7!mK92','2025-08-14','liamh94@gmail.com','Liam','McHugh','M','1994-04-11',4821,'45 Ave NW','YEG','AB','T5A1B1','VISA1011',NULL),
 ('C000012','BlueFox#21','2026-01-22','emma.frost88@yahoo.ca','Emma','Frost','F','1997-09-08',917,'67 St NW','YEG','AB','T5A1B2','MC1012',4),

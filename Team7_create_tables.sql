@@ -128,7 +128,7 @@ CREATE TABLE RentalOrder (
     movieID CHAR(7) CHECK(movieID LIKE 'M%'),
     employeeID CHAR(7) CHECK(employeeID LIKE 'E%'),
     movieRating INT CHECK(movieRating >= 1 AND movieRating <= 5), -- NULL means no rating yet
-    [status] BIT NOT NULL DEFAULT(1), -- 1 = Rented, 2 = Returned
+    [status] BIT NOT NULL DEFAULT(1), -- 0 = Rented, 1 = Returned
     checkoutDate DATE NOT NULL DEFAULT(CURRENT_DATE), 
     returnDate DATE NOT NULL DEFAULT(DATEADD(week, 1, CURRENT_DATE)),
     CONSTRAINT returnDate CHECK (returnDate = DATEADD(week, 1, checkoutDate)),
