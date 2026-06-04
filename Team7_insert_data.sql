@@ -10,6 +10,7 @@ GO
 
 --Part E : 
 
+--CUSTOMERS
 INSERT INTO Customers ( accountNumber, [password], accountCreationDate, email, firstName,
 lastName, gender, dob, houseNumber, street, city, province, postalCode, paymentIdentifier, customerRating)
 
@@ -71,6 +72,5 @@ VALUES
 ('C000050','Rocket!92','2026-05-28','zoey.ramirez03@gmail.com','Zoey','Ramirez','F','2003-11-10',4127,'24 St NW','YEG','AB','T5D4F0','VISA1050',5);
 
 GO
-
 
 SELECT * FROM Customers;
