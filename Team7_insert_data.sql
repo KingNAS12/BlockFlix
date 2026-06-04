@@ -2,7 +2,7 @@
     -- Nathan Alex Sequeira (3141620)
     -- Dominic Evans ()
     -- Nima Houshyar ()
-    -- Sashwat ()
+    -- Sashwat Gujjar ()
 -- CMPT 291 Lab 10
 
 USE CMPT291_Team7_MovieRental;
@@ -99,7 +99,7 @@ VALUES
  '2024-06-10',NULL,5),
 
 ('E000004','Cinema#55',456789,
- 'Sashwat','Patel','M','1999-02-08',
+ 'Sashwat','Gujjar','M','1999-02-08',
  905,'111 Ave NW','YEG','AB','T5A1A4',
  '2025-01-08',NULL,4),
 
