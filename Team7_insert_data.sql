@@ -71,6 +71,43 @@ VALUES
 ('C000049','Pine#801','2024-10-08','isaac.hamilton91@yahoo.ca','Isaac','Hamilton','M','1991-02-24',177,'64 Ave SW','YEG','AB','T5D4E9','MC1049',4),
 ('C000050','Rocket!92','2026-05-28','zoey.ramirez03@gmail.com','Zoey','Ramirez','F','2003-11-10',4127,'24 St NW','YEG','AB','T5D4F0','VISA1050',5);
 
-GO
 
 SELECT * FROM Customers;
+
+--Employees
+
+INSERT INTO Employee
+(employeeID, [password], [sin],
+ firstName, lastName, gender, dob,
+ houseNumber, street, city, province, postalCode,
+ startDate, endDate, employeeRating)
+VALUES
+
+('E000001','Admin#42',123456,
+ 'Nathan','Sequeira','M','1998-05-14',
+ 8421,'98 Ave NW','YEG','AB','T5A1A1',
+ '2024-01-15',NULL,5),
+
+('E000002','Block!77',234567,
+ 'Dominic','Evans','M','1997-08-22',
+ 1175,'75 St NW','YEG','AB','T5A1A2',
+ '2024-03-01',NULL,4),
+
+('E000003','Movie@91',345678,
+ 'Nima','Houshyar','M','1993-11-14',
+ 22217,'170 St SW','YEG','AB','T5A1A3',
+ '2024-06-10',NULL,5),
+
+('E000004','Cinema#55',456789,
+ 'Sashwat','Patel','M','1999-02-08',
+ 905,'111 Ave NW','YEG','AB','T5A1A4',
+ '2025-01-08',NULL,4),
+
+('E000005','Rental$88',567890,
+ 'Sheikh','Abdullah','M','1986-09-17',
+ 15643,'23 St SW','YEG','AB','T5A1A5',
+ '2025-04-20',NULL,NULL);
+
+ SELECT * FROM Employee;
+
+
