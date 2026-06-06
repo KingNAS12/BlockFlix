@@ -1,7 +1,7 @@
 -- Team 7: BlockFlix
     -- Nathan Alex Sequeira (3141620)
-    -- Dominic Evans ()
-    -- Nima Houshyar ()
+    -- Dominic Evans (3158097)
+    -- Nima Houshyar (1741854)
     -- Shashwat Gujjar ()
 -- CMPT 291 Lab 10
 
@@ -29,10 +29,10 @@ GO
 
 -- Strong Entities
 
-CREATE TABLE Customers (
+CREATE TABLE Customer (
     accountNumber CHAR(7) CHECK(accountNumber LIKE 'C%'),
     [password] VARCHAR(20) NOT NULL,
-    accountCreationDate DATE NOT NULL DEFAULT(CURRENT_DATE), 
+    accountCreationDate DATE NOT NULL DEFAULT(GETDATE()), 
     email VARCHAR(320) NOT NULL UNIQUE, -- 320 is the maximum length of an email address according to StackOverflow.
     -- Name
     firstName VARCHAR(20) NOT NULL,
@@ -59,10 +59,7 @@ CREATE TABLE Employee (
     [sin] NUMERIC(6) NOT NULL UNIQUE, -- Social insurance numbers are 6 digits long.
     -- Name
     firstName VARCHAR(20) NOT NULL,
-    lastName VARCHAR(20) NOT NULL,
-    -- Demographic
-    gender CHAR(1) NOT NULL CHECK(gender = 'F' OR gender = 'M' OR gender = 'O' OR gender = 'N'), -- 'F' = Female, 'M' = Male, 'O' = Other, 'N' = Prefer Not to say
-    dob date NOT NULL, 
+    lastName VARCHAR(20) NOT NULL, 
     -- Address
     houseNumber NUMERIC(5) NOT NULL, -- Canadian house numbers are 5 digits long. 
     street VARCHAR(10) NOT NULL, -- Eg - ' 98 Ave NW' or '111 Str SW'
@@ -70,9 +67,9 @@ CREATE TABLE Employee (
     province CHAR(2) NOT NULL, -- Using 2 character abbreviation for province. Eg- 'AB'
     postalCode CHAR(6) NOT NULL, -- Canadian postal codes are 6 characters long.
     -- Misc
-    startDate DATE DEFAULT(CURRENT_DATE),
+    startDate DATE DEFAULT(GETDATE()),
     endDate DATE DEFAULT(NULL), -- Null means not fired/quit yet. 
-    employeeRating INT CHECK(employeeRating >= 1 AND employeeRating <= 5), -- NULL means no rating yet
+    CONSTRAINT chk_endDate CHECK (endDate >= startDate OR endDate IS NULL),
     -- Key
     PRIMARY KEY(employeeID)
 );
@@ -83,8 +80,7 @@ CREATE TABLE Movie (
     genre CHAR(1) NOT NULL CHECK(genre = 'A' OR genre = 'C' OR genre = 'D' OR genre = 'F'), -- 'A'='Action','C'='Comedy','D'='Drama','F'='Foreign'
     rentalFee NUMERIC(4, 2) NOT NULL CHECK(rentalFee > 0),
     replacementFee NUMERIC(4, 2) NOT NULL CHECK(replacementFee > 0),
-    numberReplaced INT NOT NULL DEFAULT(0) CHECK(numberReplaced >= 0),
-    numberRented INT NOT NULL DEFAULT(0) CHECK(numberRented >= 0 AND numberRented <= 10),
+    copiesAvailable INT NOT NULL DEFAULT(10) CHECK(copiesAvailable >= 0), -- Total number of copies available in the store.
     PRIMARY KEY(movieID)
 );
 
@@ -102,7 +98,7 @@ CREATE TABLE CustomerPhoneNumber(
     accountNumber CHAR(7) CHECK(accountNumber LIKE 'C%'),
     phoneNumber NUMERIC(10), 
     PRIMARY KEY(accountNumber, phoneNumber),
-    FOREIGN KEY (accountNumber) REFERENCES Customers(accountNumber)
+    FOREIGN KEY (accountNumber) REFERENCES Customer(accountNumber)
 );
 
 CREATE TABLE EmployeePhoneNumber(
@@ -128,12 +124,21 @@ CREATE TABLE RentalOrder (
     movieID CHAR(7) CHECK(movieID LIKE 'M%'),
     employeeID CHAR(7) CHECK(employeeID LIKE 'E%'),
     movieRating INT CHECK(movieRating >= 1 AND movieRating <= 5), -- NULL means no rating yet
-    [status] BIT NOT NULL DEFAULT(1), -- 0 = Rented, 1 = Returned
-    checkoutDate DATE NOT NULL DEFAULT(CURRENT_DATE), 
-    returnDate DATE NOT NULL DEFAULT(DATEADD(week, 1, CURRENT_DATE)),
-    CONSTRAINT returnDate CHECK (returnDate = DATEADD(week, 1, checkoutDate)),
+    replacementFeeCharged BIT NOT NULL DEFAULT(0), -- 0 = Not charged , 1 = Charged
+    checkoutDate DATE NOT NULL DEFAULT(GETDATE()), 
+    returnDate DATE DEFAULT(NULL), -- NULL means not returned. 
+    CONSTRAINT chk_returnDate CHECK (returnDate >= checkoutDate OR returnDate IS NULL), 
+    -- Active Rentals: 
+        -- Active: returnDate IS NULL AND GETDATE() <= DATEADD(WEEK, 1, checkoutDate) AND replacementFeeCharge = 0
+        -- Overdue: returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 1, checkoutDate) AND replacementFeeCharge = 0
+    -- Rental History
+        -- Returned on time: returnDate <= DATEADD(WEEK, 1, checkoutDate) AND replacementFeeCharge = 0
+        -- Returned late but not charged replacement fee: DATEADD(WEEK, 1, checkoutDate) < returnDate < DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharge = 0
+        -- Overdue and needs to be charged replacement fee: returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharge = 0
+        -- Overdue and replacement fee charged: returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharge = 1
+        -- Replacement fee already charged but returned later: returnDate >= DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharge = 1
     PRIMARY KEY(rentalID),
-    FOREIGN KEY (accountNumber) REFERENCES Customers(accountNumber),
+    FOREIGN KEY (accountNumber) REFERENCES Customer(accountNumber),
     FOREIGN KEY (employeeID) REFERENCES Employee(employeeID), 
     FOREIGN KEY (movieID) REFERENCES Movie(movieID)
 ); 
@@ -141,11 +146,11 @@ CREATE TABLE RentalOrder (
 -- Relationships
 
 CREATE TABLE MovieQueue (
-    queueIndex INT CHECK(queueIndex >= 0), 
+    queueIndex INT CHECK(queueIndex BETWEEN 1 AND 3), 
     accountNumber CHAR(7) CHECK(accountNumber LIKE 'C%'),
     movieID CHAR(7) CHECK(movieID LIKE 'M%'),
-    PRIMARY KEY(queueIndex),
-    FOREIGN KEY (accountNumber) REFERENCES Customers(accountNumber),
+    PRIMARY KEY(queueIndex, accountNumber),
+    FOREIGN KEY (accountNumber) REFERENCES Customer(accountNumber),
     FOREIGN KEY (movieID) REFERENCES Movie(movieID)
 ); 
 
