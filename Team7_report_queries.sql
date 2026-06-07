@@ -10,7 +10,7 @@ GO
 
 -- Part G
 
--- Number of times each movie has been rented --
+-- 1. Movie Rental Frequency --
 SELECT m.movieID, 
         m.movieName, 
         COUNT(ro.rentalID) AS rentalsCount
@@ -19,7 +19,7 @@ SELECT m.movieID,
     GROUP BY m.movieID, m.movieName
     ORDER BY rentalsCount DESC;
 
--- Number of rentals from each genre --
+-- 2. Genre Rental Frequency  --
 SELECT m.genre, 
         COUNT(ro.movieID) AS rentalsCount
     FROM RentalOrder AS ro, Movie AS m
@@ -27,14 +27,14 @@ SELECT m.genre,
     GROUP BY m.genre 
     ORDER BY rentalsCount DESC;
 
--- Number of rentals per day of the week --
+-- 3. Rentals by Day of Week --
 SELECT DATENAME(WEEKDAY, checkoutDate) AS dayOfWeek, 
         COUNT(movieID) AS numberOfMoviesRented
     FROM RentalOrder
     GROUP BY DATEPART(WEEKDAY, checkoutDate), DATENAME(WEEKDAY, checkoutDate)
     ORDER BY DATEPART(WEEKDAY, checkoutDate);
 
--- Number of rental orders made by each employee -- 
+-- 4. Employee Rental Processing -- 
 SELECT e.employeeID, 
         e.firstName + ' ' + e.lastName AS employeeName,
         COUNT(ro.movieID) AS rentalsProcessed
@@ -43,7 +43,7 @@ SELECT e.employeeID,
     GROUP BY e.employeeID, e.firstName, e.lastName
     ORDER BY rentalsProcessed DESC;
 
--- Number of rentals made by each customer -- 
+-- 5. Customer Rental Activity -- 
 SELECT c.accountNumber, 
         c.firstName + ' ' + c.lastName AS customerName,
         COUNT(ro.movieID) AS rentalsCount
@@ -52,7 +52,7 @@ SELECT c.accountNumber,
     GROUP BY c.accountNumber, c.firstName, c.lastName
     ORDER BY rentalsCount DESC;
 
--- Number of spots Customer have in the queue --
+-- 6. Customer Queue Usage --
 SELECT c.accountNumber, 
         c.firstName + ' ' + c.lastName AS customerName,
         COUNT(mq.queueIndex) AS numQueueSpots
@@ -61,7 +61,7 @@ SELECT c.accountNumber,
     GROUP BY c.accountNumber, c.firstName, c.lastName
     ORDER BY numQueueSpots DESC;
 
--- Average rating of each movie -- 
+-- 7. Movie Ratings Report -- 
 SELECT m.movieID, 
         m.movieName,
         AVG(ro.movieRating) AS avgRating,
@@ -72,7 +72,7 @@ SELECT m.movieID,
     GROUP BY m.movieID, m.movieName
     ORDER BY avgRating DESC, numRatings DESC;
 
--- Average rating of each actor --
+-- 8. Actor Ratings Report --
 SELECT a.actorID, 
         a.actorName,  
         AVG(r.actorRating) AS avgRating,
@@ -82,7 +82,7 @@ SELECT a.actorID,
     GROUP BY a.actorID, a.actorName
     ORDER BY avgRating DESC, numRatings DESC;
 
--- Average rating of each customer --
+-- 9. Customer Ratings Report --
 SELECT accountNumber, 
         firstName + ' ' + lastName AS customerName,
         AVG(customerRating) AS customerRating
@@ -90,7 +90,7 @@ SELECT accountNumber,
     GROUP BY accountNumber, firstName, lastName
     ORDER BY customerRating DESC;
 
--- Frequency of movies rented out by gender --
+-- 10. Movie Preferences by Gender --
 SELECT c.gender,
         m.movieID, 
         m.movieName,
@@ -101,7 +101,7 @@ SELECT c.gender,
     GROUP BY c.gender, m.movieID, m.movieName
     ORDER BY c.gender ASC, rentals DESC;
 
--- Frequency of genres rented out by gender --
+-- 11. Genre Preferences by Gender --
 SELECT c.gender,
         m.genre,
         COUNT(ro.rentalID) AS rentals
@@ -111,7 +111,7 @@ SELECT c.gender,
     GROUP BY c.gender, m.genre
     ORDER BY c.gender ASC, m.genre ASC;
 
--- Actors popularity by gender --
+-- 12. Actor Popularity by Gender --
 SELECT cu.gender,
         a.actorID,
         a.actorName,
@@ -123,64 +123,7 @@ SELECT cu.gender,
     GROUP BY cu.gender, a.actorID, a.actorName
     ORDER BY cu.gender ASC, appearancesInRentedMovies DESC;
 
--- Actors frequency in genre --
-SELECT m.genre,
-        a.actorID, 
-        a.actorName,
-        COUNT(*) AS appearances
-    FROM Actor AS a, [Cast] AS c, Movie AS m
-    WHERE a.actorID = c.actorID
-        AND c.movieID = m.movieID
-    GROUP BY a.actorID, a.actorName, m.genre
-    ORDER BY m.genre ASC, appearances DESC, a.actorID ASC;
-
--- Frequency of replacements for each movie -- 
-SELECT m.movieID,
-        m.movieName,
-        COUNT(ro.rentalID) AS timesReplaced
-    FROM Movie AS m, RentalOrder AS ro
-    WHERE m.movieID = ro.movieID
-        AND ro.replacementFeeCharged = 1
-    GROUP BY m.movieID, m.movieName
-    ORDER BY timesReplaced DESC;
-
--- Number of overdue rentals per customer --
-SELECT c.accountNumber,
-        c.firstName + ' ' + c.lastName AS customerName,
-        COUNT(ro.rentalID) AS overdueRentals
-    FROM Customer AS c, RentalOrder AS ro
-    WHERE c.accountNumber = ro.accountNumber
-        AND ro.returnDate IS NULL
-        AND GETDATE() > DATEADD(WEEK, 1, ro.checkoutDate)
-    GROUP BY c.accountNumber, c.firstName, c.lastName
-    ORDER BY overdueRentals DESC, c.accountNumber ASC;
-
--- Movies that were never rented out --
-SELECT movieID,
-        movieName
-    FROM Movie
-    WHERE movieID NOT IN (
-        SELECT movieID
-            FROM RentalOrder
-    );
-
--- Movies with above-average ratings --
-SELECT m.movieID,
-        m.movieName,
-        AVG(ro.movieRating) AS avgRating, 
-        COUNT(ro.movieID) AS numRatings
-    FROM Movie AS m, RentalOrder AS ro
-    WHERE m.movieID = ro.movieID
-        AND ro.movieRating IS NOT NULL
-    GROUP BY m.movieID, m.movieName
-    HAVING AVG(ro.movieRating) > (
-        SELECT AVG(movieRating)
-            FROM RentalOrder
-            WHERE movieRating IS NOT NULL
-    )
-    ORDER BY avgRating DESC, numRatings DESC, m.movieID ASC;
-
--- Actors preferences by customer gender --
+-- 13. Actor Preferences by Customer Gender --
 SELECT c.gender,
         a.actorID,
         a.actorName,
@@ -192,7 +135,7 @@ SELECT c.gender,
     GROUP BY c.gender, a.actorID, a.actorName
     ORDER BY c.gender ASC, rentals DESC, a.actorID ASC;
 
--- Actors preferences by Customer age --
+-- 14. Actor Preferences by Customer Age Group --
 SELECT CASE
             WHEN DATEDIFF(YEAR, c.dob, GETDATE()) < 18 THEN '18-'
             WHEN DATEDIFF(YEAR, c.dob, GETDATE()) BETWEEN 18 AND 29 THEN '18-29'
@@ -214,7 +157,64 @@ SELECT CASE
         END
     ORDER BY ageGroup ASC, rentals DESC, a.actorID ASC;
 
--- Monthly Income Report --
+-- 15. Actor Genre Frequency --
+SELECT m.genre,
+        a.actorID, 
+        a.actorName,
+        COUNT(*) AS appearances
+    FROM Actor AS a, [Cast] AS c, Movie AS m
+    WHERE a.actorID = c.actorID
+        AND c.movieID = m.movieID
+    GROUP BY a.actorID, a.actorName, m.genre
+    ORDER BY m.genre ASC, appearances DESC, a.actorID ASC;
+
+-- 16. Movie Replacement Frequency -- 
+SELECT m.movieID,
+        m.movieName,
+        COUNT(ro.rentalID) AS timesReplaced
+    FROM Movie AS m, RentalOrder AS ro
+    WHERE m.movieID = ro.movieID
+        AND ro.replacementFeeCharged = 1
+    GROUP BY m.movieID, m.movieName
+    ORDER BY timesReplaced DESC;
+
+-- 17. Overdue Rentals by Customer --
+SELECT c.accountNumber,
+        c.firstName + ' ' + c.lastName AS customerName,
+        COUNT(ro.rentalID) AS overdueRentals
+    FROM Customer AS c, RentalOrder AS ro
+    WHERE c.accountNumber = ro.accountNumber
+        AND ro.returnDate IS NULL
+        AND GETDATE() > DATEADD(WEEK, 1, ro.checkoutDate)
+    GROUP BY c.accountNumber, c.firstName, c.lastName
+    ORDER BY overdueRentals DESC, c.accountNumber ASC;
+
+-- 18. Movies Never Rented Out --
+SELECT movieID,
+        movieName
+    FROM Movie
+    WHERE movieID NOT IN (
+        SELECT movieID
+            FROM RentalOrder
+    );
+
+-- 19. Above-Average Rated Movies --
+SELECT m.movieID,
+        m.movieName,
+        AVG(ro.movieRating) AS avgRating, 
+        COUNT(ro.movieID) AS numRatings
+    FROM Movie AS m, RentalOrder AS ro
+    WHERE m.movieID = ro.movieID
+        AND ro.movieRating IS NOT NULL
+    GROUP BY m.movieID, m.movieName
+    HAVING AVG(ro.movieRating) > (
+        SELECT AVG(movieRating)
+            FROM RentalOrder
+            WHERE movieRating IS NOT NULL
+    )
+    ORDER BY avgRating DESC, numRatings DESC, m.movieID ASC;
+
+-- 20. Monthly Income Report --
 SELECT YEAR(ro.checkoutDate) AS rentalYear,
         DATEPART(MONTH, ro.checkoutDate) AS numMonth,
         DATENAME(MONTH, ro.checkoutDate) AS rentalMonth,
@@ -231,3 +231,4 @@ SELECT YEAR(ro.checkoutDate) AS rentalYear,
     WHERE ro.movieID = m.movieID
     GROUP BY YEAR(ro.checkoutDate), DATEPART(MONTH, ro.checkoutDate), DATENAME(MONTH, ro.checkoutDate)
     ORDER BY rentalYear ASC, numMonth ASC;
+
