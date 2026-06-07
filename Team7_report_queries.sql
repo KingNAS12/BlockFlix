@@ -2,7 +2,7 @@
     -- Nathan Alex Sequeira (3141620)
     -- Dominic Evans (3158097)
     -- Nima Houshyar (1741854)
-    -- Sashwat ()
+    -- Sashwat Gujjar (3151998)
 -- CMPT 291 Lab 10
 
 USE CMPT291_Team7_MovieRental;
