@@ -2,7 +2,7 @@
     -- Nathan Alex Sequeira (3141620)
     -- Dominic Evans (3158097)
     -- Nima Houshyar (1741854)
-    -- Sashwat Gujjar (3151998)
+    -- Shashwat Gujjar (3151998)
 -- CMPT 291 Lab 10
 
 
