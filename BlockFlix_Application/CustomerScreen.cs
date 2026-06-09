@@ -1,8 +1,8 @@
 namespace BlockFlix_Application
 {
-    public partial class Form1 : Form
+    public partial class CustomerScreen : Form
     {
-        public Form1()
+        public CustomerScreen()
         {
             InitializeComponent();
         }
