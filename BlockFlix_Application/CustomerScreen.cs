@@ -21,18 +21,15 @@ namespace BlockFlix_Application
         }
         private void loadRentalHistoryActive()
         {
-            string query = @"
-            SELECT rentalID, ro.movieID, movieName, checkoutDate, returnDate, 
-                CASE WHEN returnDate <= DATEADD(WEEK, 1, checkoutDate) THEN 'Returned on time'
-                     WHEN returnDate > DATEADD(WEEK, 1, checkoutDate) AND returnDate<DATEADD(WEEK, 2, checkoutDate) THEN 'Returned late but not charged'
-                     WHEN returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 0 THEN 'Overdue and needs to be charged'
-                     WHEN returnDate IS NULL AND replacementFeeCharged = 1 THEN 'Overdue and replacement fee charged'
-                     WHEN returnDate >= DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 1 THEN 'Replacement fee already charged but returned later'
-                END AS rentalStatus
-            FROM RentalOrder AS ro, Customer AS c, Movie AS m
-            WHERE ro.accountNumber = c.accountNumber
-                AND ro.movieID = m.movieID
-                AND c.accountNumber = @accountID;";
+            string query = @"SELECT ro.rentalID, ro.accountNumber, c.firstName + ' ' + c.lastName AS customerName,
+                                    ro.movieID, m.movieName, checkoutDate, DATEADD(WEEK, 1, checkoutDate) AS dueDate,
+                                    CASE WHEN GETDATE() > DATEADD(WEEK, 1, checkoutDate) THEN 'Overdue'
+                                    ELSE 'Active'
+                                    END AS rentalStatus
+                             FROM RentalOrder AS ro, Customer AS c, Movie AS m
+                             WHERE ro.accountNumber = c.accountNumber
+                                   AND ro.movieID = m.movieID
+                                   AND returnDate IS NULL; ";
             LoadQuery(query);
         }
         private void loadRentalHistoryReturned()
@@ -41,8 +38,6 @@ namespace BlockFlix_Application
             SELECT rentalID, ro.movieID, movieName, checkoutDate, returnDate, 
                 CASE WHEN returnDate <= DATEADD(WEEK, 1, checkoutDate) THEN 'Returned on time'
                      WHEN returnDate > DATEADD(WEEK, 1, checkoutDate) AND returnDate<DATEADD(WEEK, 2, checkoutDate) THEN 'Returned late but not charged'
-                     WHEN returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 0 THEN 'Overdue and needs to be charged'
-                     WHEN returnDate IS NULL AND replacementFeeCharged = 1 THEN 'Overdue and replacement fee charged'
                      WHEN returnDate >= DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 1 THEN 'Replacement fee already charged but returned later'
                 END AS rentalStatus
             FROM RentalOrder AS ro, Customer AS c, Movie AS m
@@ -55,9 +50,7 @@ namespace BlockFlix_Application
         {
             string query = @"
             SELECT rentalID, ro.movieID, movieName, checkoutDate, returnDate, 
-                CASE WHEN returnDate <= DATEADD(WEEK, 1, checkoutDate) THEN 'Returned on time'
-                     WHEN returnDate > DATEADD(WEEK, 1, checkoutDate) AND returnDate<DATEADD(WEEK, 2, checkoutDate) THEN 'Returned late but not charged'
-                     WHEN returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 0 THEN 'Overdue and needs to be charged'
+                CASE WHEN returnDate IS NULL AND GETDATE() > DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 0 THEN 'Overdue and needs to be charged'
                      WHEN returnDate IS NULL AND replacementFeeCharged = 1 THEN 'Overdue and replacement fee charged'
                      WHEN returnDate >= DATEADD(WEEK, 2, checkoutDate) AND replacementFeeCharged = 1 THEN 'Replacement fee already charged but returned later'
                 END AS rentalStatus
