@@ -28,46 +28,73 @@
         /// </summary>
         private void InitializeComponent()
         {
-            lblRentalHistory = new Label();
-            dgvRentalHistory = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dgvRentalHistory).BeginInit();
+            lblCustomer = new Label();
+            dgvMyBlockFlix = new DataGridView();
+            btnRentalHistory = new Button();
+            btnMyQueue = new Button();
+            ((System.ComponentModel.ISupportInitialize)dgvMyBlockFlix).BeginInit();
             SuspendLayout();
             // 
-            // lblRentalHistory
+            // lblCustomer
             // 
-            lblRentalHistory.AutoSize = true;
-            lblRentalHistory.Location = new Point(641, 31);
-            lblRentalHistory.Name = "lblRentalHistory";
-            lblRentalHistory.Size = new Size(102, 20);
-            lblRentalHistory.TabIndex = 0;
-            lblRentalHistory.Text = "Rental History";
+            lblCustomer.AutoSize = true;
+            lblCustomer.Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
+            lblCustomer.Location = new Point(355, 52);
+            lblCustomer.Name = "lblCustomer";
+            lblCustomer.Size = new Size(99, 20);
+            lblCustomer.TabIndex = 0;
+            lblCustomer.Text = "My BlockFlix";
             // 
-            // dgvRentalHistory
+            // dgvMyBlockFlix
             // 
-            dgvRentalHistory.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvRentalHistory.Location = new Point(443, 86);
-            dgvRentalHistory.Name = "dgvRentalHistory";
-            dgvRentalHistory.RowHeadersWidth = 51;
-            dgvRentalHistory.Size = new Size(300, 188);
-            dgvRentalHistory.TabIndex = 1;
+            dgvMyBlockFlix.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvMyBlockFlix.Location = new Point(250, 131);
+            dgvMyBlockFlix.Name = "dgvMyBlockFlix";
+            dgvMyBlockFlix.RowHeadersWidth = 51;
+            dgvMyBlockFlix.Size = new Size(300, 188);
+            dgvMyBlockFlix.TabIndex = 1;
+            // 
+            // btnRentalHistory
+            // 
+            btnRentalHistory.Location = new Point(200, 325);
+            btnRentalHistory.Name = "btnRentalHistory";
+            btnRentalHistory.Size = new Size(151, 29);
+            btnRentalHistory.TabIndex = 2;
+            btnRentalHistory.Text = "View Rental History";
+            btnRentalHistory.UseVisualStyleBackColor = true;
+            btnRentalHistory.Click += btnRentalHistory_Click;
+            // 
+            // btnMyQueue
+            // 
+            btnMyQueue.Location = new Point(477, 325);
+            btnMyQueue.Name = "btnMyQueue";
+            btnMyQueue.Size = new Size(123, 29);
+            btnMyQueue.TabIndex = 3;
+            btnMyQueue.Text = "View My Queue";
+            btnMyQueue.UseVisualStyleBackColor = true;
+            btnMyQueue.Click += btnMyQueue_Click;
             // 
             // CustomerScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(dgvRentalHistory);
-            Controls.Add(lblRentalHistory);
+            Controls.Add(btnMyQueue);
+            Controls.Add(btnRentalHistory);
+            Controls.Add(dgvMyBlockFlix);
+            Controls.Add(lblCustomer);
             Name = "CustomerScreen";
             Text = "CustomerScreen";
-            ((System.ComponentModel.ISupportInitialize)dgvRentalHistory).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvMyBlockFlix).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private Label lblRentalHistory;
-        private DataGridView dgvRentalHistory;
+        private Label lblCustomer;
+        private DataGridView dgvMyBlockFlix;
+        private Button btnRentalHistory;
+        private Button btnMyQueue;
     }
 }
