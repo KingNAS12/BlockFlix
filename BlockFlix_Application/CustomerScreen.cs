@@ -10,7 +10,8 @@ namespace BlockFlix_Application
 {
     public partial class CustomerScreen : Form
     {
-        private string connectionString = @"Server=localhost;Database=LibraryLabDB;Trusted_Connection=True;TrustServerCertificate=True;";
+        private string connectionString = @"Server=localhost;Database=CMPT291_Team7_MovieRental;Trusted_Connection=True;TrustServerCertificate=True;";
+        public string accountNumber = "C000019";
         public CustomerScreen()
         {
             InitializeComponent();
@@ -33,7 +34,7 @@ namespace BlockFlix_Application
             FROM RentalOrder AS ro, Customer AS c, Movie AS m
             WHERE ro.accountNumber = c.accountNumber
                 AND ro.movieID = m.movieID
-                AND c.accountNumber = C + ""%"";";
+                AND c.accountNumber = @accountID;";
             LoadQuery(query);
         }
 
@@ -43,7 +44,7 @@ namespace BlockFlix_Application
             SELECT mq.queueIndex, mq.movieID, m.movieName
             FROM MovieQueue AS mq, Customer AS c, Movie AS m
             WHERE c.accountNumber = mq.accountNumber
-                AND c.accountNumber = C + ""%""
+                AND c.accountNumber = @accountID
                 AND m.movieID = mq.movieID;";
             LoadQuery(query);
         }
@@ -52,6 +53,9 @@ namespace BlockFlix_Application
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 SqlDataAdapter adapter = new SqlDataAdapter(query, conn);
+                adapter.SelectCommand.Parameters.AddWithValue(
+                    "@accountID", accountNumber);
+
                 DataTable table = new DataTable();
                 adapter.Fill(table);
                 dgvMyBlockFlix.DataSource = table;
