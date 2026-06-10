@@ -40,7 +40,7 @@ namespace BlockFlix_Application
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim();
+            string username = txtUsername.Text.Trim().ToUpper();
             string password = txtPassword.Text.Trim();
 
             if (username == "" || password == "")
@@ -49,34 +49,65 @@ namespace BlockFlix_Application
                 return;
             }
 
-            string query = @"
-                SELECT accountNumber
-                FROM Customer
-                WHERE accountNumber = @Username
-                AND [password] = @Password;";
+            string query;
+            string role;
 
-            using (SqlConnection conn = new SqlConnection(connectionString))
+            if (username.StartsWith("C"))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
+                role = "Customer";
 
-                cmd.Parameters.AddWithValue("@Username", username);
-                cmd.Parameters.AddWithValue("@Password", password);
+                query = @"
+                    SELECT accountNumber
+                    FROM Customer
+                    WHERE accountNumber = @Username
+                    AND [password] = @Password;";
+            }
+            else if (username.StartsWith("E"))
+            {
+                role = "Employee";
 
-                conn.Open();
+                query = @"
+                    SELECT employeeID
+                    FROM Employee
+                    WHERE employeeID = @Username
+                    AND [password] = @Password;";
+            }
+            else
+            {
+                MessageBox.Show("Username must start with C for customer or E for employee.");
+                return;
+            }
 
-                object result = cmd.ExecuteScalar();
-
-                if (result != null)
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    MessageBox.Show("Login successful.");
-                    CustomerScreen customerScreen = new CustomerScreen();
-                    customerScreen.Show();
-                    this.Hide();
+                    cmd.Parameters.AddWithValue("@Username", username);
+                    cmd.Parameters.AddWithValue("@Password", password);
+
+                    conn.Open();
+
+                    object result = cmd.ExecuteScalar();
+
+                    if (result != null)
+                    {
+                        MessageBox.Show("Login successful.");
+
+                        HomeForm homeForm = new HomeForm(username, role, this);
+                        homeForm.Show();
+
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid username or password.");
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("Invalid username or password.");
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Login error: " + ex.Message);
             }
         }
 
