@@ -95,7 +95,8 @@ namespace BlockFlix_Application
 
         private void btnViewRequests_Click(object? sender, EventArgs e)
         {
-            OpenTemporaryScreen("View Requests");
+            CreateRental screen = new CreateRental(userId, connectionString);
+            screen.Show();
         }
 
         private void btnViewMonthlyIncome_Click(object? sender, EventArgs e)

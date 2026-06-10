@@ -71,7 +71,7 @@
             btnViewRequests.Name = "btnViewRequests";
             btnViewRequests.Size = new Size(143, 29);
             btnViewRequests.TabIndex = 3;
-            btnViewRequests.Text = "View Requests";
+            btnViewRequests.Text = "View Rentals";
             btnViewRequests.UseVisualStyleBackColor = true;
             // 
             // btnViewMonthlyIncome
