@@ -9,6 +9,7 @@ namespace BlockFlix_Application
         private readonly string userId = "";
         private readonly string role = "";
         private readonly Form? loginForm;
+        private string connectionString; 
         private bool loggingOut = false;
 
         // Needed so Visual Studio Designer can open HomeForm.
@@ -18,13 +19,14 @@ namespace BlockFlix_Application
         }
 
         // Used after successful login.
-        public HomeForm(string userId, string role, Form loginForm)
+        public HomeForm(string userId, string role, Form loginForm, string conn)
         {
             InitializeComponent();
 
             this.userId = userId;
             this.role = role;
             this.loginForm = loginForm;
+            this.connectionString = conn; 
 
             SetupHomePage();
 
@@ -82,7 +84,7 @@ namespace BlockFlix_Application
 
         private void btnViewRentalHistory_Click(object? sender, EventArgs e)
         {
-            CustomerScreen screen = new CustomerScreen();
+            CustomerScreen screen = new CustomerScreen(userId, connectionString);
             screen.Show();
         }
 
