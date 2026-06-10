@@ -83,6 +83,7 @@ namespace BlockFlix_Application
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
+<<<<<<< HEAD
                     cmd.Parameters.AddWithValue("@Username", username);
                     cmd.Parameters.AddWithValue("@Password", password);
 
@@ -103,6 +104,16 @@ namespace BlockFlix_Application
                     {
                         MessageBox.Show("Invalid username or password.");
                     }
+=======
+                    MessageBox.Show("Login successful.");
+                    CustomerScreen customerScreen = new CustomerScreen(username, connectionString);
+                    customerScreen.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid username or password.");
+>>>>>>> b457dcb492c7fe1f3a34208bf9f5b803bc6122b2
                 }
             }
             catch (Exception ex)

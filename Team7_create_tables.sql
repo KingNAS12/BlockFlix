@@ -149,7 +149,7 @@ CREATE TABLE MovieQueue (
     queueIndex INT CHECK(queueIndex BETWEEN 1 AND 3), 
     accountNumber CHAR(7) CHECK(accountNumber LIKE 'C%'),
     movieID CHAR(7) CHECK(movieID LIKE 'M%'),
-    PRIMARY KEY(queueIndex, accountNumber),
+    PRIMARY KEY(queueIndex, movieID),
     FOREIGN KEY (accountNumber) REFERENCES Customer(accountNumber),
     FOREIGN KEY (movieID) REFERENCES Movie(movieID)
 ); 
