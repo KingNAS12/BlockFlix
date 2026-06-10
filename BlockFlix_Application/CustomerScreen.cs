@@ -6,11 +6,13 @@ namespace BlockFlix_Application
 {
     public partial class CustomerScreen : Form
     {
-        private string connectionString = @"Server=localhost;Database=CMPT291_Team7_MovieRental;Trusted_Connection=True;TrustServerCertificate=True;";
-        public string accountNumber = "C000019";
-        public CustomerScreen()
+        private string connectionString; 
+        public string accountNumber; 
+        public CustomerScreen(string accountNo, string conn)
         {
             InitializeComponent();
+            accountNumber = accountNo;
+            connectionString = conn;
             loadRentalHistoryActive();
             loadRentalHistoryReturned();
             loadRentalHistoryOverdue();
@@ -64,12 +66,15 @@ namespace BlockFlix_Application
         private void btnMyQueue_Click(object sender, EventArgs e)
         {
             string query = @"
-            SELECT mq.queueIndex, mq.movieID, m.movieName
+            SELECT m.movieName AS Movie, mq.queueIndex as YourSpot
             FROM MovieQueue AS mq, Customer AS c, Movie AS m
             WHERE c.accountNumber = mq.accountNumber
                 AND c.accountNumber = @accountID
                 AND m.movieID = mq.movieID;";
             LoadQuery(query);
+            ViewMovies searchForm = new ViewMovies(connectionString, accountNumber);
+            searchForm.ShowDialog();
+
         }
         private void LoadQuery(string query)
         {

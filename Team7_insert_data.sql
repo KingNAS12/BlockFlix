@@ -66,7 +66,8 @@ INSERT INTO Customer (accountNumber, [password], accountCreationDate, email, fir
     ('C000050','Rocket!92','2026-05-28','zoey.howzer03@gmail.com','Zoey','Howzer','N','1963-11-10',4127,'24 St NW','YEG','AB','T5B2D0','VISA1050',5);
 
 INSERT INTO Employee (employeeID, [password], [sin], firstName, lastName, houseNumber, street, city, province, postalCode, startDate, endDate) VALUES
-    ('E000001', 'Admin#42', 123456, 'Nathan', 'Sequeira', 8421, '98 Ave NW', 'YEG', 'AB', 'T5A1A1', '2024-01-15', NULL),
+    ('E000000', 'Admin#42', 000000, 'Self', 'Service', 0000, '00 Ave NW', 'YEG', 'AB', '000000', '2026-01-01', NULL),
+    ('E000001', 'Qwerty12', 123456, 'Nathan', 'Sequeira', 8421, '98 Ave NW', 'YEG', 'AB', 'T5A1A1', '2024-01-15', NULL),
     ('E000002', 'Block!77', 234567, 'Dominic', 'Evans', 1175, '75 St NW', 'YEG', 'AB', 'T5A1A2', '2024-03-01', NULL),
     ('E000003', 'Movie@91', 345678, 'Nima', 'Houshyar', 22217, '170 St SW', 'YEG', 'AB', 'T5A1A3', '2024-06-10', '2025-11-14'),
     ('E000004', 'Cinema#55', 456789, 'Sashwat', 'Gujjar',905, '111 Ave NW', 'YEG', 'AB', 'T5A1A4', '2024-01-08', NULL),
@@ -101,7 +102,7 @@ INSERT INTO Movie (movieID, movieName, genre, rentalFee, replacementFee, copiesA
     ('M000011', 'The Green Mile', 'D', 3.99, 19.99, 9),
     ('M000012', 'A Beautiful Mind', 'D', 3.99, 19.99, 10),
     ('M000027', 'Good Will Hunting', 'D', 4.49, 24.99, 10),
-    ('M000028', 'The Godfather', 'D', 4.99, 34.99, 5),
+    ('M000028', 'The Godfather', 'D', 4.99, 34.99, 0),
     ('M000029', 'Fight Club', 'D', 4.49, 29.99, 9),
     ('M000030', 'The Social Network', 'D', 3.99, 24.99, 10),
     ('M000031','Interstellar', 'D', 4.99, 34.99, 10),
@@ -365,23 +366,28 @@ INSERT INTO RentalOrder (rentalID, accountNumber, movieID, employeeID, movieRati
     ('R000072', 'C000003', 'M000020', 'E000001', NULL, 0, '2026-06-04', NULL),
     ('R000073', 'C000006', 'M000020', 'E000002', NULL, 0, '2026-06-04', NULL),
     ('R000074', 'C000010', 'M000020', 'E000005', NULL, 0, '2026-06-04', NULL),
-    ('R000075', 'C000014', 'M000020', 'E000002', NULL, 0, '2026-06-04', NULL);
+    ('R000075', 'C000014', 'M000020', 'E000002', NULL, 0, '2026-06-04', NULL),
+    ('R000076', 'C000041', 'M000028', 'E000004', NULL, 0, '2026-06-05', NULL),
+    ('R000077', 'C000003', 'M000028', 'E000001', NULL, 0, '2026-06-05', NULL),
+    ('R000078', 'C000006', 'M000028', 'E000002', NULL, 0, '2026-06-05', NULL),
+    ('R000079', 'C000010', 'M000028', 'E000005', NULL, 0, '2026-06-05', NULL),
+    ('R000080', 'C000014', 'M000028', 'E000002', NULL, 0, '2026-06-05', NULL);
 
 --Movie Queue
-INSERT INTO MovieQueue (queueIndex, accountNumber, movieID) VALUES
-    (1, 'C000001', 'M000002'),
-    (1, 'C000002', 'M000019'),
-    (1, 'C000003', 'M000037'),
-    (1, 'C000004', 'M000009'),
-    (2, 'C000001', 'M000013'),
-    (2, 'C000002', 'M000028'),
-    (1, 'C000012', 'M000002'),
-    (1, 'C000017', 'M000019'),
-    (1, 'C000022', 'M000037'),
-    (1, 'C000027', 'M000009'),
-    (1, 'C000033', 'M000013'),
-    (1, 'C000041', 'M000028'),
-    (3, 'C000001', 'M000039'); 
+--INSERT INTO MovieQueue (queueIndex, accountNumber, movieID) VALUES
+--    (1, 'C000001', 'M000002'),
+--    (1, 'C000002', 'M000019'),
+--    (1, 'C000003', 'M000037'),
+--    (1, 'C000004', 'M000009'),
+--    (2, 'C000001', 'M000013'),
+--    (2, 'C000002', 'M000028'),
+--    (1, 'C000012', 'M000002'),
+--    (1, 'C000017', 'M000019'),
+--    (1, 'C000022', 'M000037'),
+--    (1, 'C000027', 'M000009'),
+--    (1, 'C000033', 'M000013'),
+--    (1, 'C000041', 'M000028'),
+--    (3, 'C000001', 'M000039'); 
  
 INSERT INTO ActorRating (actorID, rentalID, actorRating) VALUES
     -- Superman (M000020): R000003, R000009, R000012, R000019

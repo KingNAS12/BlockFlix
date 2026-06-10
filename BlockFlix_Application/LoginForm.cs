@@ -69,7 +69,7 @@ namespace BlockFlix_Application
                 if (result != null)
                 {
                     MessageBox.Show("Login successful.");
-                    CustomerScreen customerScreen = new CustomerScreen();
+                    CustomerScreen customerScreen = new CustomerScreen(username, connectionString);
                     customerScreen.Show();
                     this.Hide();
                 }
