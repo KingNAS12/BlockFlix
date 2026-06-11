@@ -321,7 +321,7 @@ namespace BlockFlix_Application
                         movieRating, 
                         replacementFeeCharged, 
                         checkoutDate, 
-                        returnDate,
+                        returnDate
                     ) VALUES (
                         @rentalID,
                         @accountNumber,

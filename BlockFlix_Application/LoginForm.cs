@@ -15,7 +15,7 @@ namespace BlockFlix_Application
 
 
         }
-        private void txtUsername_TextChanged(object sender, EventArgs e)
+        private void txtAccountNumber_TextChanged(object sender, EventArgs e)
         {
 
         }
@@ -25,7 +25,7 @@ namespace BlockFlix_Application
 
         }
 
-        private void lblUsername_Click(object sender, EventArgs e)
+        private void lblAccountNumber_Click(object sender, EventArgs e)
         {
 
         }
@@ -37,7 +37,7 @@ namespace BlockFlix_Application
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            string username = txtUsername.Text.Trim().ToUpper();
+            string username = txtAccountNumber.Text.Trim().ToUpper();
             string password = txtPassword.Text.Trim();
 
             if (username == "" || password == "")
@@ -92,9 +92,13 @@ namespace BlockFlix_Application
                         MessageBox.Show("Login successful.");
 
                         HomeForm homeForm = new HomeForm(username, role, this, connectionString);
+                        homeForm.FormClosed += (s, args) =>
+                        {
+                            txtAccountNumber.Text = "";
+                            txtPassword.Text = ""; 
+                        };
                         homeForm.Show();
 
-                        this.Hide();
                     }
                     else
                     {

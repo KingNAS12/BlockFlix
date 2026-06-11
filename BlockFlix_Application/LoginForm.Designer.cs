@@ -30,14 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             btnLogin = new Button();
-            lblUsername = new Label();
+            lblAccountNumber = new Label();
             lblPassword = new Label();
-            txtUsername = new TextBox();
+            txtAccountNumber = new TextBox();
             txtPassword = new TextBox();
             lblTitle = new Label();
             pictureBox2 = new PictureBox();
             pictureBox1 = new PictureBox();
-            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
@@ -51,7 +50,7 @@
             btnLogin.FlatStyle = FlatStyle.Flat;
             btnLogin.Font = new Font("Segoe UI", 11.1428576F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnLogin.Location = new Point(855, 532);
-            btnLogin.Margin = new Padding(4, 4, 4, 4);
+            btnLogin.Margin = new Padding(4);
             btnLogin.Name = "btnLogin";
             btnLogin.Size = new Size(180, 49);
             btnLogin.TabIndex = 3;
@@ -59,19 +58,19 @@
             btnLogin.UseVisualStyleBackColor = false;
             btnLogin.Click += btnLogin_Click;
             // 
-            // lblUsername
+            // lblAccountNumber
             // 
-            lblUsername.AutoSize = true;
-            lblUsername.BackColor = Color.Transparent;
-            lblUsername.Font = new Font("Segoe UI", 11.1428576F, FontStyle.Bold);
-            lblUsername.ForeColor = Color.WhiteSmoke;
-            lblUsername.Location = new Point(693, 357);
-            lblUsername.Margin = new Padding(4, 0, 4, 0);
-            lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(153, 37);
-            lblUsername.TabIndex = 4;
-            lblUsername.Text = "Username:";
-            lblUsername.Click += lblUsername_Click;
+            lblAccountNumber.AutoSize = true;
+            lblAccountNumber.BackColor = Color.Transparent;
+            lblAccountNumber.Font = new Font("Segoe UI", 11.1428576F, FontStyle.Bold);
+            lblAccountNumber.ForeColor = Color.WhiteSmoke;
+            lblAccountNumber.Location = new Point(693, 357);
+            lblAccountNumber.Margin = new Padding(4, 0, 4, 0);
+            lblAccountNumber.Name = "lblAccountNumber";
+            lblAccountNumber.Size = new Size(171, 25);
+            lblAccountNumber.TabIndex = 4;
+            lblAccountNumber.Text = "Account Number:";
+            lblAccountNumber.Click += lblAccountNumber_Click;
             // 
             // lblPassword
             // 
@@ -81,26 +80,26 @@
             lblPassword.Location = new Point(700, 433);
             lblPassword.Margin = new Padding(4, 0, 4, 0);
             lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(146, 37);
+            lblPassword.Size = new Size(102, 25);
             lblPassword.TabIndex = 5;
             lblPassword.Text = "Password:";
             lblPassword.Click += lblPassword_Click;
             // 
-            // txtUsername
+            // txtAccountNumber
             // 
-            txtUsername.Location = new Point(933, 357);
-            txtUsername.Margin = new Padding(4, 4, 4, 4);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(232, 42);
-            txtUsername.TabIndex = 6;
-            txtUsername.TextChanged += txtUsername_TextChanged;
+            txtAccountNumber.Location = new Point(933, 357);
+            txtAccountNumber.Margin = new Padding(4);
+            txtAccountNumber.Name = "txtAccountNumber";
+            txtAccountNumber.Size = new Size(232, 32);
+            txtAccountNumber.TabIndex = 6;
+            txtAccountNumber.TextChanged += txtAccountNumber_TextChanged;
             // 
             // txtPassword
             // 
             txtPassword.Location = new Point(933, 433);
-            txtPassword.Margin = new Padding(4, 4, 4, 4);
+            txtPassword.Margin = new Padding(4);
             txtPassword.Name = "txtPassword";
-            txtPassword.Size = new Size(232, 42);
+            txtPassword.Size = new Size(232, 32);
             txtPassword.TabIndex = 7;
             txtPassword.UseSystemPasswordChar = true;
             txtPassword.TextChanged += txtPassword_TextChanged;
@@ -139,34 +138,24 @@
             pictureBox1.TabIndex = 11;
             pictureBox1.TabStop = false;
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(168, 648);
-            label1.Name = "label1";
-            label1.Size = new Size(137, 74);
-            label1.TabIndex = 12;
-            label1.Text = "Matrix \n⭐⭐⭐⭐⭐";
-            // 
             // LoginForm
             // 
-            AutoScaleDimensions = new SizeF(16F, 36F);
+            AutoScaleDimensions = new SizeF(11F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1855, 877);
-            Controls.Add(label1);
             Controls.Add(pictureBox1);
             Controls.Add(pictureBox2);
             Controls.Add(lblTitle);
             Controls.Add(txtPassword);
-            Controls.Add(txtUsername);
+            Controls.Add(txtAccountNumber);
             Controls.Add(lblPassword);
-            Controls.Add(lblUsername);
+            Controls.Add(lblAccountNumber);
             Controls.Add(btnLogin);
             Font = new Font("Segoe UI", 11.1428576F, FontStyle.Bold);
             ForeColor = Color.WhiteSmoke;
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -180,13 +169,12 @@
 
         #endregion
         private Button btnLogin;
-        private Label lblUsername;
+        private Label lblAccountNumber;
         private Label lblPassword;
-        private TextBox txtUsername;
+        private TextBox txtAccountNumber;
         private TextBox txtPassword;
         private Label lblTitle;
         private PictureBox pictureBox2;
         private PictureBox pictureBox1;
-        private Label label1;
     }
 }

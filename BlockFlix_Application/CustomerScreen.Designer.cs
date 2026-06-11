@@ -35,6 +35,9 @@
             cbxOverdue = new CheckBox();
             flowLayoutPanel1 = new FlowLayoutPanel();
             dgvMyBlockFlixQueue = new DataGridView();
+            lblMovieList = new Label();
+            lblMyMovieRentals = new Label();
+            lblMyMovieQueue = new Label();
             ((System.ComponentModel.ISupportInitialize)dgvMyBlockFlixRentals).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvMyBlockFlixQueue).BeginInit();
             SuspendLayout();
@@ -107,18 +110,48 @@
             // dgvMyBlockFlixQueue
             // 
             dgvMyBlockFlixQueue.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvMyBlockFlixQueue.Location = new Point(261, 407);
+            dgvMyBlockFlixQueue.Location = new Point(261, 442);
             dgvMyBlockFlixQueue.Name = "dgvMyBlockFlixQueue";
             dgvMyBlockFlixQueue.RowHeadersWidth = 51;
             dgvMyBlockFlixQueue.Size = new Size(302, 270);
             dgvMyBlockFlixQueue.TabIndex = 9;
             dgvMyBlockFlixQueue.CellContentClick += dataGridView1_CellContentClick;
             // 
+            // lblMovieList
+            // 
+            lblMovieList.AutoSize = true;
+            lblMovieList.Location = new Point(45, 36);
+            lblMovieList.Name = "lblMovieList";
+            lblMovieList.Size = new Size(162, 20);
+            lblMovieList.TabIndex = 10;
+            lblMovieList.Text = "Select A Movie To Rent";
+            // 
+            // lblMyMovieRentals
+            // 
+            lblMyMovieRentals.AutoSize = true;
+            lblMyMovieRentals.Location = new Point(261, 36);
+            lblMyMovieRentals.Name = "lblMyMovieRentals";
+            lblMyMovieRentals.Size = new Size(126, 20);
+            lblMyMovieRentals.TabIndex = 11;
+            lblMyMovieRentals.Text = "My Movie Rentals";
+            // 
+            // lblMyMovieQueue
+            // 
+            lblMyMovieQueue.AutoSize = true;
+            lblMyMovieQueue.Location = new Point(261, 419);
+            lblMyMovieQueue.Name = "lblMyMovieQueue";
+            lblMyMovieQueue.Size = new Size(121, 20);
+            lblMyMovieQueue.TabIndex = 12;
+            lblMyMovieQueue.Text = "My Movie Queue";
+            // 
             // CustomerScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1196, 745);
+            Controls.Add(lblMyMovieQueue);
+            Controls.Add(lblMyMovieRentals);
+            Controls.Add(lblMovieList);
             Controls.Add(dgvMyBlockFlixQueue);
             Controls.Add(flowLayoutPanel1);
             Controls.Add(cbxOverdue);
@@ -143,5 +176,8 @@
         private CheckBox cbxOverdue;
         private FlowLayoutPanel flowLayoutPanel1;
         private DataGridView dgvMyBlockFlixQueue;
+        private Label lblMovieList;
+        private Label lblMyMovieRentals;
+        private Label lblMyMovieQueue;
     }
 }
