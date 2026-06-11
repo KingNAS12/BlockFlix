@@ -30,7 +30,6 @@
         {
             lblWelcome = new Label();
             btnViewRentalHistory = new Button();
-            btnViewMovies = new Button();
             btnViewRequests = new Button();
             btnViewMonthlyIncome = new Button();
             btnReviews = new Button();
@@ -41,7 +40,7 @@
             // lblWelcome
             // 
             lblWelcome.AutoSize = true;
-            lblWelcome.Location = new Point(351, 26);
+            lblWelcome.Location = new Point(329, 35);
             lblWelcome.Name = "lblWelcome";
             lblWelcome.Size = new Size(71, 20);
             lblWelcome.TabIndex = 0;
@@ -50,25 +49,16 @@
             // 
             // btnViewRentalHistory
             // 
-            btnViewRentalHistory.Location = new Point(66, 70);
+            btnViewRentalHistory.Location = new Point(324, 169);
             btnViewRentalHistory.Name = "btnViewRentalHistory";
             btnViewRentalHistory.Size = new Size(153, 29);
             btnViewRentalHistory.TabIndex = 1;
             btnViewRentalHistory.Text = "View Rental History";
             btnViewRentalHistory.UseVisualStyleBackColor = true;
             // 
-            // btnViewMovies
-            // 
-            btnViewMovies.Location = new Point(487, 70);
-            btnViewMovies.Name = "btnViewMovies";
-            btnViewMovies.Size = new Size(143, 29);
-            btnViewMovies.TabIndex = 2;
-            btnViewMovies.Text = "View Movies";
-            btnViewMovies.UseVisualStyleBackColor = true;
-            // 
             // btnViewRequests
             // 
-            btnViewRequests.Location = new Point(66, 163);
+            btnViewRequests.Location = new Point(329, 80);
             btnViewRequests.Name = "btnViewRequests";
             btnViewRequests.Size = new Size(143, 29);
             btnViewRequests.TabIndex = 3;
@@ -77,7 +67,7 @@
             // 
             // btnViewMonthlyIncome
             // 
-            btnViewMonthlyIncome.Location = new Point(487, 163);
+            btnViewMonthlyIncome.Location = new Point(319, 115);
             btnViewMonthlyIncome.Name = "btnViewMonthlyIncome";
             btnViewMonthlyIncome.Size = new Size(163, 29);
             btnViewMonthlyIncome.TabIndex = 4;
@@ -86,7 +76,7 @@
             // 
             // btnReviews
             // 
-            btnReviews.Location = new Point(66, 245);
+            btnReviews.Location = new Point(353, 204);
             btnReviews.Name = "btnReviews";
             btnReviews.Size = new Size(94, 29);
             btnReviews.TabIndex = 5;
@@ -95,7 +85,7 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(66, 331);
+            btnLogout.Location = new Point(669, 386);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(94, 29);
             btnLogout.TabIndex = 6;
@@ -104,7 +94,7 @@
             // 
             // btnProfile
             // 
-            btnProfile.Location = new Point(483, 253);
+            btnProfile.Location = new Point(353, 239);
             btnProfile.Name = "btnProfile";
             btnProfile.Size = new Size(94, 29);
             btnProfile.TabIndex = 7;
@@ -123,7 +113,6 @@
             Controls.Add(btnReviews);
             Controls.Add(btnViewMonthlyIncome);
             Controls.Add(btnViewRequests);
-            Controls.Add(btnViewMovies);
             Controls.Add(btnViewRentalHistory);
             Controls.Add(lblWelcome);
             Name = "HomeForm";
@@ -137,7 +126,6 @@
 
         private Label lblWelcome;
         private Button btnViewRentalHistory;
-        private Button btnViewMovies;
         private Button btnViewRequests;
         private Button btnViewMonthlyIncome;
         private Button btnReviews;
