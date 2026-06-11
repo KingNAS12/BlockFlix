@@ -64,6 +64,7 @@ INSERT INTO Customer (accountNumber, [password], accountCreationDate, email, fir
     ('C000048', HASHBYTES('SHA2_256', 'Zen@731'), '2025-05-12', 'penelope.cruz00@outlook.com', 'Penelope', 'Cruz', 'F', '1967-05-03', 29991, '93 St NW', 'YEG', 'AB', 'T5D4E8', 'AMEX1048', 1),
     ('C000049', HASHBYTES('SHA2_256', 'Pine#801'), '2024-10-08', 'isaac.lahey91@yahoo.ca', 'Isaac', 'Lahey', 'N', '1971-02-24', 177, '64 Ave SW', 'YEG', 'AB', 'T5D4E9', 'MC1049', 4),
     ('C000050', HASHBYTES('SHA2_256', 'Rocket!92'), '2026-05-28', 'zoey.howzer03@gmail.com', 'Zoey', 'Howzer', 'N', '1963-11-10', 4127, '24 St NW', 'YEG', 'AB', 'T5B2D0', 'VISA1050', 5);
+
 INSERT INTO Employee (employeeID, [password], [sin], firstName, lastName, houseNumber, street, city, province, postalCode, startDate, endDate) VALUES
     ('E000000', HASHBYTES('SHA2_256', 'Admin#42'), 000000, 'Self', 'Service', 0000, '00 Ave NW', 'YEG', 'AB', '000000', '2026-01-01', NULL),
     ('E000001', HASHBYTES('SHA2_256', 'Qwerty12'), 123456, 'Nathan', 'Sequeira', 8421, '98 Ave NW', 'YEG', 'AB', 'T5A1A1', '2024-01-15', NULL),
