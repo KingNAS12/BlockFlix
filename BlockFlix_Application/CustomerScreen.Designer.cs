@@ -63,7 +63,7 @@
             cbxActiveRental.AutoSize = true;
             cbxActiveRental.Checked = true;
             cbxActiveRental.CheckState = CheckState.Checked;
-            cbxActiveRental.Location = new Point(261, 356);
+            cbxActiveRental.Location = new Point(772, 356);
             cbxActiveRental.Name = "cbxActiveRental";
             cbxActiveRental.Size = new Size(124, 24);
             cbxActiveRental.TabIndex = 4;
@@ -76,7 +76,7 @@
             cbxReturned.AutoSize = true;
             cbxReturned.Checked = true;
             cbxReturned.CheckState = CheckState.Checked;
-            cbxReturned.Location = new Point(484, 356);
+            cbxReturned.Location = new Point(995, 356);
             cbxReturned.Name = "cbxReturned";
             cbxReturned.Size = new Size(91, 24);
             cbxReturned.TabIndex = 6;
@@ -89,7 +89,7 @@
             cbxOverdue.AutoSize = true;
             cbxOverdue.Checked = true;
             cbxOverdue.CheckState = CheckState.Checked;
-            cbxOverdue.Location = new Point(391, 356);
+            cbxOverdue.Location = new Point(902, 356);
             cbxOverdue.Name = "cbxOverdue";
             cbxOverdue.Size = new Size(87, 24);
             cbxOverdue.TabIndex = 7;
@@ -110,7 +110,7 @@
             dgvMyBlockFlixQueue.Location = new Point(261, 407);
             dgvMyBlockFlixQueue.Name = "dgvMyBlockFlixQueue";
             dgvMyBlockFlixQueue.RowHeadersWidth = 51;
-            dgvMyBlockFlixQueue.Size = new Size(923, 270);
+            dgvMyBlockFlixQueue.Size = new Size(302, 270);
             dgvMyBlockFlixQueue.TabIndex = 9;
             dgvMyBlockFlixQueue.CellContentClick += dataGridView1_CellContentClick;
             // 

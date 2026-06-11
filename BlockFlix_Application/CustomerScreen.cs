@@ -193,6 +193,7 @@ namespace BlockFlix_Application
                         movieName, 
                         copiesAvailable
                     FROM Movie
+                    ORDER BY movieName;
             ";
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
