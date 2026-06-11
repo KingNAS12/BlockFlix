@@ -102,9 +102,11 @@ namespace BlockFlix_Application
                                 AND r.replacementFeeCharged = 0
                             THEN 'Returned on time'
                         WHEN r.returnDate > DATEADD(WEEK, 1, r.checkoutDate)
-                                AND r.returnDate < DATEADD(WEEK, 2, r.checkoutDate)
                                 AND r.replacementFeeCharged = 0
                             THEN 'Returned late; not charged'
+                        WHEN r.returnDate >= DATEADD(WEEK, 1, r.checkoutDate)
+                             AND r.replacementFeeCharged = 1
+                            THEN 'Returned late; replacement fee charged'
                         WHEN r.returnDate IS NULL
                              AND GETDATE() > DATEADD(WEEK, 2, r.checkoutDate)
                              AND r.replacementFeeCharged = 0
@@ -113,9 +115,6 @@ namespace BlockFlix_Application
                              AND GETDATE() > DATEADD(WEEK, 2, r.checkoutDate)
                              AND r.replacementFeeCharged = 1
                             THEN 'Overdue; fee charged'
-                        WHEN r.returnDate >= DATEADD(WEEK, 2, r.checkoutDate)
-                             AND r.replacementFeeCharged = 1
-                            THEN 'Returned late; replacement fee charged'
                     END AS note
                 FROM RentalOrder AS r, Customer AS c, Movie AS m, Employee AS e 
                 WHERE r.accountNumber = c.accountNumber 
@@ -267,7 +266,7 @@ namespace BlockFlix_Application
             // Toggling ON requires current date >= checkoutDate + 2 weeks.
             if (!currentValue && DateTime.Now < checkoutDate.AddDays(14))
             {
-                MessageBox.Show("The replacement fee can only be charged on or after {checkoutDate.AddDays(14):MMM dd, yyyy}.");
+                MessageBox.Show($"The replacement fee can only be charged on or after {checkoutDate.AddDays(14):MMM dd, yyyy}.");
                 // Revert — the grid toggled the checkbox optimistically on click
                 row.Cells["ChargeReplacementFee"].Value = false;
                 return;
