@@ -238,6 +238,7 @@ namespace BlockFlix_Application
             string movieID = dataGridView1.Rows[rowIndex].Cells["movieID"].Value.ToString();
             ReturnRental(rentalID, movieID);
             UpdateQueue(movieID);
+            GetRating(rentalID, movieID); 
         }
 
         private void ReturnRental(string rentalID, string movieID)
@@ -320,7 +321,7 @@ namespace BlockFlix_Application
                         movieRating, 
                         replacementFeeCharged, 
                         checkoutDate, 
-                        returnDate
+                        returnDate,
                     ) VALUES (
                         @rentalID,
                         @accountNumber,
@@ -389,6 +390,12 @@ namespace BlockFlix_Application
                 LoadRentals(); // Example
             };
             createRentalForm.Show();
+        }
+
+        private void GetRating(string rentalID, string movieID)
+        {
+            GetRatingForm ratingForm = new GetRatingForm(connectionString, rentalID, movieID);
+            ratingForm.ShowDialog();
         }
     }
 }
