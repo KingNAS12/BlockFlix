@@ -95,7 +95,7 @@ namespace BlockFlix_Application
 
         private void btnViewRequests_Click(object? sender, EventArgs e)
         {
-            CreateRental screen = new CreateRental(userId, connectionString);
+            ViewRentals screen = new ViewRentals(userId, connectionString);
             screen.Show();
         }
 
