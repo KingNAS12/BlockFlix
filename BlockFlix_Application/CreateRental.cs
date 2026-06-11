@@ -1,4 +1,5 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,8 +43,10 @@ namespace BlockFlix_Application
                 {
                     if (string.IsNullOrEmpty(AccountNumber))
                         return "Select Customer";
-
-                    return $"({AccountNumber}) {FirstName} {LastName}";
+                    else if (AccountNumber == "NEW")
+                        return "New Customer";
+                    else
+                        return $"({AccountNumber}) {FirstName} {LastName}";
                 }
             }
         }
@@ -110,7 +113,7 @@ namespace BlockFlix_Application
             });
             customers.Add(new CustomerItem
             {
-                AccountNumber = "",
+                AccountNumber = "NEW",
                 FirstName = "New",
                 LastName = "Customer"
             });
@@ -173,8 +176,22 @@ namespace BlockFlix_Application
         {
             if (comboBoxCustomer.SelectedIndex == 1) // "New Customer" selected
             {
-                //NewCustomerForm newCustomerForm = new NewCustomerForm(connectionString);
-                LoadCustomers(); // Refresh customer list after adding new customer
+                string accountNumber = ""; 
+                using (SqlConnection conn = new SqlConnection(connectionString))
+                {
+                    conn.Open();
+                    SqlCommand countCmd = new SqlCommand(
+                        "SELECT COUNT(*) FROM Customer",
+                        conn);
+                    int count = Convert.ToInt32(countCmd.ExecuteScalar());
+                    accountNumber = "C" + (count + 1).ToString("D6");
+                }
+                ProfileForm profileForm = new ProfileForm(accountNumber, "Customer", connectionString, true);
+                profileForm.FormClosed += (s, args) =>
+                {
+                    LoadCustomers(); // Refresh customer list after adding new customer
+                };
+                profileForm.Show();
             }
         }
 

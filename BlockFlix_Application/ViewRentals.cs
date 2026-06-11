@@ -387,7 +387,11 @@ namespace BlockFlix_Application
             CreateRental createRentalForm = new CreateRental(employeeID, connectionString);
             createRentalForm.FormClosed += (s, args) =>
             {
+<<<<<<< Updated upstream
                 LoadRentals(); 
+=======
+                LoadRentals();
+>>>>>>> Stashed changes
             };
             createRentalForm.Show();
         }

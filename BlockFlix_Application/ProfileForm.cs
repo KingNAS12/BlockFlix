@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Eventing.Reader;
 using System.Windows.Forms;
 using Microsoft.Data.SqlClient;
 
@@ -9,6 +10,7 @@ namespace BlockFlix_Application
         private readonly string userId;
         private readonly string role;
         private readonly string connectionString;
+        private readonly bool newProfile; 
 
         // Needed so Visual Studio Designer can open ProfileForm.
         public ProfileForm()
@@ -18,18 +20,20 @@ namespace BlockFlix_Application
             userId = "";
             role = "";
             connectionString = "";
+            newProfile = false;
 
             WireUpButtons();
         }
 
         // Used when HomeForm opens ProfileForm after login.
-        public ProfileForm(string userId, string role, string connectionString)
+        public ProfileForm(string userId, string role, string connectionString, bool newProfile = false)
         {
             InitializeComponent();
 
             this.userId = userId;
             this.role = role;
             this.connectionString = connectionString;
+            this.newProfile = newProfile;
 
             WireUpButtons();
         }
@@ -47,7 +51,17 @@ namespace BlockFlix_Application
 
             if (role == "Customer")
             {
-                LoadCustomerProfile();
+                if (newProfile)
+                {
+                    txtUserId.Text = userId; 
+                    txtRole.Text = role;
+                }
+                else
+                {
+                    LoadCustomerProfile();
+                    lblPassword.Visible = false;
+                    txtPassword.Visible = false;
+                }
             }
             else if (role == "Employee")
             {
@@ -58,6 +72,13 @@ namespace BlockFlix_Application
 
                 lblPaymentIdentifier.Visible = false;
                 txtPaymentIdentifier.Visible = false;
+
+                comboBoxGender.Visible = false;
+                dateTimePicker1.Visible = false;
+                labelDob.Visible = false;
+
+                lblPassword.Visible = false;
+                txtPassword.Visible = false;
             }
             else
             {
@@ -71,7 +92,7 @@ namespace BlockFlix_Application
             string sql = @"
                 SELECT accountNumber, email, firstName, lastName,
                        houseNumber, street, city, province, postalCode,
-                       paymentIdentifier
+                       paymentIdentifier, password, gender, dob
                 FROM Customer
                 WHERE accountNumber = @UserId;";
 
@@ -99,6 +120,15 @@ namespace BlockFlix_Application
                     txtProvince.Text = reader["province"].ToString();
                     txtPostalCode.Text = reader["postalCode"].ToString();
                     txtPaymentIdentifier.Text = reader["paymentIdentifier"].ToString();
+                    dateTimePicker1.Value = reader["dob"] != DBNull.Value ? Convert.ToDateTime(reader["dob"]) : DateTime.Now;
+                    comboBoxGender.SelectedItem = reader["gender"].ToString() switch
+                    {
+                        "M" => "Male",
+                        "F" => "Female",
+                        "O" => "Other",
+                        "N" => "Prefer Not To Say",
+                        _ => null
+                    };
                 }
                 else
                 {
@@ -174,13 +204,6 @@ namespace BlockFlix_Application
 
         private void btnClose_Click(object? sender, EventArgs e)
         {
-            // User can close only if the visible profile fields are not blank/invalid.
-            if (!ValidateProfileInput())
-            {
-                MessageBox.Show("Please fill all required fields before closing.");
-                return;
-            }
-
             Close();
         }
 
@@ -193,10 +216,18 @@ namespace BlockFlix_Application
             string city = txtCity.Text.Trim().ToUpper();
             string province = txtProvince.Text.Trim().ToUpper();
             string postalCode = txtPostalCode.Text.Trim().Replace(" ", "").ToUpper();
+            string password = txtPassword.Text.Trim();
+            DateTime dob = dateTimePicker1.Value;
 
             if (firstName == "" || lastName == "")
             {
                 MessageBox.Show("First name and last name cannot be blank.");
+                return false;
+            }
+
+            if (password == "" && newProfile)
+            {
+                MessageBox.Show("Password cannot be blank.");
                 return false;
             }
 
@@ -305,18 +336,61 @@ namespace BlockFlix_Application
 
         private void SaveCustomerProfile()
         {
-            string sql = @"
-                UPDATE Customer
-                SET email = @Email,
-                    firstName = @FirstName,
-                    lastName = @LastName,
-                    houseNumber = @HouseNumber,
-                    street = @Street,
-                    city = @City,
-                    province = @Province,
-                    postalCode = @PostalCode,
-                    paymentIdentifier = @PaymentIdentifier
-                WHERE accountNumber = @UserId;";
+            string sql = "";
+            if (newProfile)
+            {
+                sql = @"
+                    INSERT INTO Customer (
+                        accountNumber,
+                        [password], 
+                        accountCreationDate, 
+                        email, 
+                        firstName, 
+                        lastName, 
+                        gender, 
+                        dob, 
+                        houseNumber, 
+                        street, 
+                        city, 
+                        province, 
+                        postalCode, 
+                        paymentIdentifier, 
+                        customerRating
+                    ) VALUES (
+                        @UserId, 
+                        HASHBYTES('SHA2_256', @Password), 
+                        GETDATE(),
+                        @Email, 
+                        @FirstName, 
+                        @LastName,
+                        @gender,
+                        @dob,    
+                        @HouseNumber, 
+                        @Street, 
+                        @City, 
+                        @Province, 
+                        @PostalCode,
+                        @PaymentIdentifier, 
+                        NULL
+                    );";
+            }
+            else
+            {
+                sql = @"
+                    UPDATE Customer
+                    SET email = @Email,
+                        firstName = @FirstName,
+                        lastName = @LastName,
+                        gender = @gender,
+                        dob = @dob,
+                        houseNumber = @HouseNumber,
+                        street = @Street,
+                        city = @City,
+                        province = @Province,
+                        postalCode = @PostalCode,
+                        paymentIdentifier = @PaymentIdentifier
+                    WHERE accountNumber = @UserId;";
+            }
 
             try
             {
@@ -333,6 +407,17 @@ namespace BlockFlix_Application
                 cmd.Parameters.AddWithValue("@PostalCode", txtPostalCode.Text.Trim().Replace(" ", "").ToUpper());
                 cmd.Parameters.AddWithValue("@PaymentIdentifier", txtPaymentIdentifier.Text.Trim());
                 cmd.Parameters.AddWithValue("@UserId", userId);
+                if (newProfile)
+                {
+                    cmd.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 20).Value = txtPassword.Text.Trim();
+                }
+                cmd.Parameters.AddWithValue("@gender",
+                    comboBoxGender.SelectedItem?.ToString() == "Male" ? "M" :
+                    comboBoxGender.SelectedItem?.ToString() == "Female" ? "F" :
+                    comboBoxGender.SelectedItem?.ToString() == "Other" ? "O" :
+                    comboBoxGender.SelectedItem?.ToString() == "Prefer Not To Say" ? "N" :
+                    DBNull.Value);
+                cmd.Parameters.AddWithValue("@dob", dateTimePicker1.Value);
 
                 conn.Open();
 

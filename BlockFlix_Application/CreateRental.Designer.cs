@@ -40,23 +40,23 @@
             // 
             // comboBoxMovie
             // 
+            comboBoxMovie.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxMovie.FormattingEnabled = true;
             comboBoxMovie.Location = new Point(325, 148);
             comboBoxMovie.Name = "comboBoxMovie";
             comboBoxMovie.Size = new Size(151, 28);
             comboBoxMovie.TabIndex = 0;
-            comboBoxMovie.Text = "Select Movie";
             comboBoxMovie.UseWaitCursor = true;
             comboBoxMovie.SelectedIndexChanged += comboBoxMovie_SelectedIndexChanged;
             // 
             // comboBoxCustomer
             // 
+            comboBoxCustomer.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxCustomer.FormattingEnabled = true;
             comboBoxCustomer.Location = new Point(325, 223);
             comboBoxCustomer.Name = "comboBoxCustomer";
             comboBoxCustomer.Size = new Size(151, 28);
             comboBoxCustomer.TabIndex = 1;
-            comboBoxCustomer.Text = "Select Customer";
             comboBoxCustomer.SelectedIndexChanged += comboBoxCustomer_SelectedIndexChanged;
             // 
             // label1
