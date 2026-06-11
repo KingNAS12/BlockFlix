@@ -101,7 +101,8 @@ namespace BlockFlix_Application
 
         private void btnViewMonthlyIncome_Click(object? sender, EventArgs e)
         {
-            OpenTemporaryScreen("View Monthly Income");
+            MonthlyIncomeReport screen = new MonthlyIncomeReport(connectionString);
+            screen.Show();
         }
 
         private void btnReviews_Click(object? sender, EventArgs e)
