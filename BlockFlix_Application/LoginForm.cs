@@ -81,7 +81,7 @@ namespace BlockFlix_Application
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@Username", username);
-                    cmd.Parameters.AddWithValue("@Password", password);
+                    cmd.Parameters.Add("@Password", System.Data.SqlDbType.VarChar, 20).Value = password;
 
                     conn.Open();
 
