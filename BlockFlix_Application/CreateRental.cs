@@ -53,7 +53,9 @@ namespace BlockFlix_Application
             employeeID = employee;
             connectionString = con;
             LoadMovies();
-            LoadCustomers(); 
+            LoadCustomers();
+            comboBoxMovie.SelectedIndex = 0; // Set to placeholder  
+            comboBoxCustomer.SelectedIndex = 0; // Set to placeholder  
         }
 
         private void CreateRental_Load(object sender, EventArgs e)
@@ -68,13 +70,17 @@ namespace BlockFlix_Application
             movies.Add(new MovieItem
             {
                 MovieID = "",
-                MovieName = ""
+                MovieName = "Select Movie"
             });
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlCommand cmd = new SqlCommand(
-                    "SELECT movieID, movieName FROM Movie ORDER BY movieID",
+                SqlCommand cmd = new SqlCommand(@"
+                    SELECT movieID, 
+                        movieName 
+                    FROM Movie 
+                    WHERE copiesAvailable > 0
+                    ORDER BY movieID",
                     conn);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -87,20 +93,19 @@ namespace BlockFlix_Application
                 }
             }
             comboBoxMovie.DataSource = movies;
-            comboBoxMovie.DisplayMember = "MovieName";
+            comboBoxMovie.DisplayMember = "DisplayText";
             comboBoxMovie.ValueMember = "MovieID";
-            comboBoxMovie.SelectedIndex = 0; // Set to placeholder  
         }
 
         private void LoadCustomers()
         {
-            List<CustomerItem> movies = new List<CustomerItem>();
+            List<CustomerItem> customers = new List<CustomerItem>();
             // Placeholder text
-            movies.Add(new CustomerItem
+            customers.Add(new CustomerItem
             {
                 AccountNumber = "",
-                FirstName = "",
-                LastName = ""
+                FirstName = "Select",
+                LastName = "Customer"
             });
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -111,7 +116,7 @@ namespace BlockFlix_Application
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    movies.Add(new CustomerItem
+                    customers.Add(new CustomerItem
                     {
                         AccountNumber = reader["accountNumber"].ToString(),
                         FirstName = reader["firstName"].ToString(),
@@ -119,10 +124,9 @@ namespace BlockFlix_Application
                     });
                 }
             }
-            comboBoxCustomer.DataSource = movies;
+            comboBoxCustomer.DataSource = customers;
             comboBoxCustomer.DisplayMember = "DisplayText";
             comboBoxCustomer.ValueMember = "AccountNumber";
-            comboBoxCustomer.SelectedIndex = 0; // Set to placeholder  
         }
 
         private void buttonCreateRental_Click(object sender, EventArgs e)
@@ -137,7 +141,9 @@ namespace BlockFlix_Application
                 string movieID = comboBoxMovie.SelectedValue.ToString();
                 string accountNumber = comboBoxCustomer.SelectedValue.ToString();
                 string rentalID = CreateRentalOrder(movieID, accountNumber);
-                labelRentalID.Text = "Rental Created: " + rentalID;
+                LoadMovies();
+                LoadCustomers();
+                MessageBox.Show("Rental Created: " + rentalID);
             }
         }
 
@@ -187,10 +193,13 @@ namespace BlockFlix_Application
                         @movieID,
                         @employeeID,
                         NULL,
-                        1,
+                        0,
                         GETDATE(),
                         NULL
-                    );", conn);
+                    );
+                    UPDATE Movie 
+                        SET copiesAvailable = copiesAvailable - 1 
+                        WHERE movieID = @movieID", conn);
                 insertCmd.Parameters.AddWithValue("@rentalID", rentalID);
                 insertCmd.Parameters.AddWithValue("@accountNumber", accountNumber);
                 insertCmd.Parameters.AddWithValue("@movieID", movieID);

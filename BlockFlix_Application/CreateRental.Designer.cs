@@ -31,7 +31,6 @@
             comboBoxMovie = new ComboBox();
             comboBoxCustomer = new ComboBox();
             label1 = new Label();
-            labelRentalID = new Label();
             label3 = new Label();
             buttonCreateRental = new Button();
             lblTitle = new TextBox();
@@ -67,16 +66,6 @@
             label1.Name = "label1";
             label1.Size = new Size(0, 20);
             label1.TabIndex = 2;
-            // 
-            // labelRentalID
-            // 
-            labelRentalID.AutoSize = true;
-            labelRentalID.Location = new Point(532, 231);
-            labelRentalID.Name = "labelRentalID";
-            labelRentalID.Size = new Size(70, 20);
-            labelRentalID.TabIndex = 3;
-            labelRentalID.Text = "Rental ID";
-            labelRentalID.Click += labelRentalID_Click;
             // 
             // label3
             // 
@@ -137,7 +126,6 @@
             Controls.Add(lblTitle);
             Controls.Add(buttonCreateRental);
             Controls.Add(label3);
-            Controls.Add(labelRentalID);
             Controls.Add(label1);
             Controls.Add(comboBoxCustomer);
             Controls.Add(comboBoxMovie);
@@ -152,7 +140,6 @@
         private ComboBox comboBoxMovie;
         private ComboBox comboBoxCustomer;
         private Label label1;
-        private Label labelRentalID;
         private Label label3;
         private Button buttonCreateRental;
         private TextBox lblTitle;
