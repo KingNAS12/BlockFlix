@@ -107,6 +107,12 @@ namespace BlockFlix_Application
                 FirstName = "Select",
                 LastName = "Customer"
             });
+            customers.Add(new CustomerItem
+            {
+                AccountNumber = "",
+                FirstName = "New",
+                LastName = "Customer"
+            });
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
@@ -164,7 +170,11 @@ namespace BlockFlix_Application
 
         private void comboBoxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (comboBoxCustomer.SelectedIndex == 1) // "New Customer" selected
+            {
+                //NewCustomerForm newCustomerForm = new NewCustomerForm(connectionString);
+                LoadCustomers(); // Refresh customer list after adding new customer
+            }
         }
 
         private string CreateRentalOrder(string movieID, string accountNumber)
