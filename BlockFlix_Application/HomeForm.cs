@@ -9,7 +9,7 @@ namespace BlockFlix_Application
         private readonly string userId = "";
         private readonly string role = "";
         private readonly Form? loginForm;
-        private string connectionString; 
+        private string connectionString = "";
         private bool loggingOut = false;
 
         // Needed so Visual Studio Designer can open HomeForm.
@@ -26,7 +26,7 @@ namespace BlockFlix_Application
             this.userId = userId;
             this.role = role;
             this.loginForm = loginForm;
-            this.connectionString = conn; 
+            this.connectionString = conn;
 
             SetupHomePage();
 
@@ -35,6 +35,8 @@ namespace BlockFlix_Application
             btnViewRequests.Click += btnViewRequests_Click;
             btnViewMonthlyIncome.Click += btnViewMonthlyIncome_Click;
             btnReviews.Click += btnReviews_Click;
+
+            // Do NOT add btnProfile.Click here because Designer is already connected to button1_Click.
             btnLogout.Click += btnLogout_Click;
 
             this.FormClosed += HomeForm_FormClosed;
@@ -62,9 +64,10 @@ namespace BlockFlix_Application
 
             // Buttons for both customer and employee
             btnReviews.Visible = true;
+            btnProfile.Visible = true;
             btnLogout.Visible = true;
 
-            // Colors from your diagram
+            // Colors
             btnViewRentalHistory.BackColor = Color.LightGreen;
             btnViewMovies.BackColor = Color.LightGreen;
 
@@ -72,6 +75,7 @@ namespace BlockFlix_Application
             btnViewMonthlyIncome.BackColor = Color.LightSkyBlue;
 
             btnReviews.BackColor = Color.LightGray;
+            btnProfile.BackColor = Color.Khaki;
             btnLogout.BackColor = Color.LightGray;
 
             btnViewRentalHistory.UseVisualStyleBackColor = false;
@@ -79,6 +83,7 @@ namespace BlockFlix_Application
             btnViewRequests.UseVisualStyleBackColor = false;
             btnViewMonthlyIncome.UseVisualStyleBackColor = false;
             btnReviews.UseVisualStyleBackColor = false;
+            btnProfile.UseVisualStyleBackColor = false;
             btnLogout.UseVisualStyleBackColor = false;
         }
 
@@ -109,6 +114,20 @@ namespace BlockFlix_Application
         {
             MovieReviewScreen screen = new MovieReviewScreen();
             screen.Show();
+        }
+
+        private void btnProfile_Click(object? sender, EventArgs e)
+        {
+            ProfileForm profileForm = new ProfileForm(userId, role, connectionString);
+            profileForm.ShowDialog();
+        }
+
+        // This method fixes the Designer event connection.
+        // HomeForm.Designer.cs is currently connected to button1_Click,
+        // so this redirects the click to btnProfile_Click.
+        private void button1_Click(object sender, EventArgs e)
+        {
+            btnProfile_Click(sender, e);
         }
 
         private void btnLogout_Click(object? sender, EventArgs e)

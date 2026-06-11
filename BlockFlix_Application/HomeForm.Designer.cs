@@ -35,6 +35,7 @@
             btnViewMonthlyIncome = new Button();
             btnReviews = new Button();
             btnLogout = new Button();
+            btnProfile = new Button();
             SuspendLayout();
             // 
             // lblWelcome
@@ -94,18 +95,30 @@
             // 
             // btnLogout
             // 
-            btnLogout.Location = new Point(487, 245);
+            btnLogout.Location = new Point(66, 331);
             btnLogout.Name = "btnLogout";
             btnLogout.Size = new Size(94, 29);
             btnLogout.TabIndex = 6;
             btnLogout.Text = "Logout";
             btnLogout.UseVisualStyleBackColor = true;
             // 
+            // btnProfile
+            // 
+            btnProfile.Location = new Point(483, 253);
+            btnProfile.Name = "btnProfile";
+            btnProfile.Size = new Size(94, 29);
+            btnProfile.TabIndex = 7;
+            btnProfile.Text = "My Profile";
+            btnProfile.UseVisualStyleBackColor = true;
+            btnProfile.Click += button1_Click;
+            // 
             // HomeForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = SystemColors.Control;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnProfile);
             Controls.Add(btnLogout);
             Controls.Add(btnReviews);
             Controls.Add(btnViewMonthlyIncome);
@@ -129,5 +142,6 @@
         private Button btnViewMonthlyIncome;
         private Button btnReviews;
         private Button btnLogout;
+        private Button btnProfile;
     }
 }
