@@ -13,9 +13,6 @@ namespace BlockFlix_Application
         private void LoginForm_Load(object sender, EventArgs e)
         {
 
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
 
         }
         private void txtUsername_TextChanged(object sender, EventArgs e)
