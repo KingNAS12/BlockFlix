@@ -8,8 +8,8 @@ namespace BlockFlix_Application
 {
     public partial class ViewRentals : Form
     {
-        private readonly string connectionString;
-        private readonly string employeeID;
+        private string connectionString;
+        private string employeeID;
 
         private bool showActive;
         private bool showReturned;
@@ -235,24 +235,111 @@ namespace BlockFlix_Application
             string cellText = dataGridView1.Rows[rowIndex].Cells["ReturnMovie"].Value?.ToString();
             if (string.IsNullOrWhiteSpace(cellText)) return;  // already returned — ignore click
             string rentalID = dataGridView1.Rows[rowIndex].Cells["rentalID"].Value.ToString();
-            ReturnRental(rentalID);
+            string movieID = dataGridView1.Rows[rowIndex].Cells["movieID"].Value.ToString();
+            ReturnRental(rentalID, movieID);
+            UpdateQueue(movieID);
         }
 
-        private void ReturnRental(string rentalID)
+        private void ReturnRental(string rentalID, string movieID)
         {
             string query = @"
                 UPDATE RentalOrder
                     SET returnDate = GETDATE()
                     WHERE rentalID   = @rentalID
                         AND returnDate IS NULL;
+                UPDATE Movie
+                    SET copiesAvailable = copiesAvailable + 1
+                    WHERE movieID = @movieID; 
             ";
             using (var conn = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, conn))
             {
                 cmd.Parameters.AddWithValue("@rentalID", rentalID);
+                cmd.Parameters.AddWithValue("@movieID", movieID);
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private void UpdateQueue(string movieID)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+                // Get the first customer in the queue
+                string getFirstQuery = @"
+                    SELECT accountNumber
+                        FROM movieQueue
+                        WHERE movieID = @movieID
+                            AND queueIndex = 1
+                    ";
+                SqlCommand getFirstCmd = new SqlCommand(getFirstQuery, conn);
+                getFirstCmd.Parameters.AddWithValue("@movieID", movieID);
+                object result = getFirstCmd.ExecuteScalar();
+                if (result == null)
+                {
+                    return; // Queue is empty
+                }
+                string accountNumber = result.ToString();
+                // Remove them from the queue
+                AutoCreateOrder(accountNumber, movieID, conn);
+                string deleteQuery = @"
+                    DELETE FROM movieQueue
+                        WHERE movieID = @movieID
+                            AND queueIndex = 1
+                ";
+                SqlCommand deleteCmd = new SqlCommand(deleteQuery, conn);
+                deleteCmd.Parameters.AddWithValue("@movieID", movieID);
+                deleteCmd.ExecuteNonQuery();
+                // Shift everyone else forward
+                string updateQuery = @"
+                    UPDATE movieQueue
+                        SET queueIndex = queueIndex - 1
+                        WHERE movieID = @movieID
+                            AND queueIndex > 1";
+                SqlCommand updateCmd = new SqlCommand(updateQuery, conn);
+                updateCmd.Parameters.AddWithValue("@movieID", movieID);
+                updateCmd.ExecuteNonQuery();
+            }
+        }
+
+        private void AutoCreateOrder(string accountNumber, string movieID, SqlConnection conn)
+        {
+            // Get the number of existing rentals
+            SqlCommand countCmd = new SqlCommand("SELECT COUNT(*) FROM RentalOrder", conn);
+            int rentalCount = Convert.ToInt32(countCmd.ExecuteScalar());
+            // Generate next Rental ID
+            string rentalID = "R" + (rentalCount + 1).ToString("D6");
+            // Insert rental
+            string query = @"
+                INSERT INTO RentalOrder (
+                        rentalID, 
+                        accountNumber, 
+                        movieID, 
+                        employeeID, 
+                        movieRating, 
+                        replacementFeeCharged, 
+                        checkoutDate, 
+                        returnDate
+                    ) VALUES (
+                        @rentalID,
+                        @accountNumber,
+                        @movieID,
+                        'E000000',
+                        NULL,
+                        0,
+                        GETDATE(),
+                        NULL
+                    ); 
+                UPDATE Movie
+                    SET copiesAvailable = copiesAvailable - 1
+                    WHERE movieID = @movieID; 
+            ";
+            SqlCommand insertCmd = new SqlCommand(query, conn);
+            insertCmd.Parameters.AddWithValue("@rentalID", rentalID);
+            insertCmd.Parameters.AddWithValue("@accountNumber", accountNumber);
+            insertCmd.Parameters.AddWithValue("@movieID", movieID);
+            insertCmd.ExecuteNonQuery();
         }
 
         private void HandleReplacementFeeToggle(int rowIndex)
@@ -292,6 +379,16 @@ namespace BlockFlix_Application
                 conn.Open();
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+            CreateRental createRentalForm = new CreateRental(employeeID, connectionString);
+            createRentalForm.FormClosed += (s, args) =>
+            {
+                LoadRentals(); // Example
+            };
+            createRentalForm.Show();
         }
     }
 }

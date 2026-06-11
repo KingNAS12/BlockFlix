@@ -33,13 +33,14 @@
             checkBoxReturned = new CheckBox();
             checkBoxOverdue = new CheckBox();
             dataGridView1 = new DataGridView();
+            buttonCreate = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(322, 44);
+            label1.Location = new Point(47, 26);
             label1.Name = "label1";
             label1.Size = new Size(121, 20);
             label1.TabIndex = 0;
@@ -91,14 +92,25 @@
             dataGridView1.Location = new Point(12, 100);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(776, 338);
+            dataGridView1.Size = new Size(1750, 746);
             dataGridView1.TabIndex = 4;
+            // 
+            // buttonCreate
+            // 
+            buttonCreate.Location = new Point(358, 65);
+            buttonCreate.Name = "buttonCreate";
+            buttonCreate.Size = new Size(179, 29);
+            buttonCreate.TabIndex = 5;
+            buttonCreate.Text = "+ Create New Rental";
+            buttonCreate.UseVisualStyleBackColor = true;
+            buttonCreate.Click += buttonCreate_Click;
             // 
             // ViewRentals
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1774, 858);
+            Controls.Add(buttonCreate);
             Controls.Add(dataGridView1);
             Controls.Add(checkBoxOverdue);
             Controls.Add(checkBoxReturned);
@@ -118,5 +130,6 @@
         private CheckBox checkBoxReturned;
         private CheckBox checkBoxOverdue;
         private DataGridView dataGridView1;
+        private Button buttonCreate;
     }
 }

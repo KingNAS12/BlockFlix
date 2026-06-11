@@ -30,6 +30,7 @@ namespace BlockFlix_Application
                 }
             }
         }
+
         public class CustomerItem()
         {
             public string FirstName { get; set; }
