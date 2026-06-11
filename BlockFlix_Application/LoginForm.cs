@@ -57,7 +57,7 @@ namespace BlockFlix_Application
                     SELECT accountNumber
                     FROM Customer
                     WHERE accountNumber = @Username
-                    AND [password] = @Password;";
+                    AND [password] = HASHBYTES('SHA2_256', @Password);";
             }
             else if (username.StartsWith("E"))
             {
@@ -67,7 +67,7 @@ namespace BlockFlix_Application
                     SELECT employeeID
                     FROM Employee
                     WHERE employeeID = @Username
-                    AND [password] = @Password;";
+                    AND [password] = HASHBYTES('SHA2_256', @Password);";
             }
             else
             {
