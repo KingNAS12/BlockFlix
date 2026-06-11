@@ -31,7 +31,7 @@ GO
 
 CREATE TABLE Customer (
     accountNumber CHAR(7) CHECK(accountNumber LIKE 'C%'),
-    [password] VARCHAR(20) NOT NULL,
+    [password] VARBINARY(32) NOT NULL
     accountCreationDate DATE NOT NULL DEFAULT(GETDATE()), 
     email VARCHAR(320) NOT NULL UNIQUE, -- 320 is the maximum length of an email address according to StackOverflow.
     -- Name
@@ -55,7 +55,7 @@ CREATE TABLE Customer (
 
 CREATE TABLE Employee (
     employeeID CHAR(7) CHECK(employeeID LIKE 'E%'),
-    [password] VARCHAR(20) NOT NULL,
+    [password] VARBINARY(32) NOT NULL
     [sin] NUMERIC(6) NOT NULL UNIQUE, -- Social insurance numbers are 6 digits long.
     -- Name
     firstName VARCHAR(20) NOT NULL,
