@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             lblWelcome = new Label();
-            btnViewRentalHistory = new Button();
+            btnMovieLibrary = new Button();
             btnViewRequests = new Button();
             btnViewMonthlyIncome = new Button();
             btnReviews = new Button();
@@ -47,14 +47,14 @@
             lblWelcome.Text = "Welcome";
             lblWelcome.Click += lblWelcome_Click;
             // 
-            // btnViewRentalHistory
+            // btnMovieLibrary
             // 
-            btnViewRentalHistory.Location = new Point(324, 169);
-            btnViewRentalHistory.Name = "btnViewRentalHistory";
-            btnViewRentalHistory.Size = new Size(153, 29);
-            btnViewRentalHistory.TabIndex = 1;
-            btnViewRentalHistory.Text = "View Rental History";
-            btnViewRentalHistory.UseVisualStyleBackColor = true;
+            btnMovieLibrary.Location = new Point(324, 169);
+            btnMovieLibrary.Name = "btnMovieLibrary";
+            btnMovieLibrary.Size = new Size(153, 29);
+            btnMovieLibrary.TabIndex = 1;
+            btnMovieLibrary.Text = "Movie Library";
+            btnMovieLibrary.UseVisualStyleBackColor = true;
             // 
             // btnViewRequests
             // 
@@ -113,7 +113,7 @@
             Controls.Add(btnReviews);
             Controls.Add(btnViewMonthlyIncome);
             Controls.Add(btnViewRequests);
-            Controls.Add(btnViewRentalHistory);
+            Controls.Add(btnMovieLibrary);
             Controls.Add(lblWelcome);
             Name = "HomeForm";
             Text = "HomeForm";
@@ -125,7 +125,7 @@
         #endregion
 
         private Label lblWelcome;
-        private Button btnViewRentalHistory;
+        private Button btnMovieLibrary;
         private Button btnViewRequests;
         private Button btnViewMonthlyIncome;
         private Button btnReviews;

@@ -47,14 +47,14 @@
             // 
             comboBoxRating.FormattingEnabled = true;
             comboBoxRating.Items.AddRange(new object[] { "1", "2", "3", "4", "5" });
-            comboBoxRating.Location = new Point(279, 217);
+            comboBoxRating.Location = new Point(324, 217);
             comboBoxRating.Name = "comboBoxRating";
             comboBoxRating.Size = new Size(151, 28);
             comboBoxRating.TabIndex = 1;
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(237, 291);
+            buttonSave.Location = new Point(282, 291);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(94, 29);
             buttonSave.TabIndex = 2;
@@ -64,7 +64,7 @@
             // 
             // buttonCancel
             // 
-            buttonCancel.Location = new Point(379, 291);
+            buttonCancel.Location = new Point(424, 291);
             buttonCancel.Name = "buttonCancel";
             buttonCancel.Size = new Size(94, 29);
             buttonCancel.TabIndex = 3;

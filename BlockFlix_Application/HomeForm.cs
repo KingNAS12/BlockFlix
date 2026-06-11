@@ -30,7 +30,7 @@ namespace BlockFlix_Application
 
             SetupHomePage();
 
-            btnViewRentalHistory.Click += btnViewRentalHistory_Click;
+            btnMovieLibrary.Click += btnViewRentalHistory_Click;
             btnViewRequests.Click += btnViewRequests_Click;
             btnViewMonthlyIncome.Click += btnViewMonthlyIncome_Click;
             btnReviews.Click += btnReviews_Click;
@@ -54,7 +54,7 @@ namespace BlockFlix_Application
             bool isEmployee = role == "Employee";
 
             // Customer-only buttons
-            btnViewRentalHistory.Visible = isCustomer;
+            btnMovieLibrary.Visible = isCustomer;
 
             // Employee-only buttons
             btnViewRequests.Visible = isEmployee;
@@ -66,7 +66,7 @@ namespace BlockFlix_Application
             btnLogout.Visible = true;
 
             // Colors
-            btnViewRentalHistory.BackColor = Color.LightGreen;
+            btnMovieLibrary.BackColor = Color.LightGreen;
 
             btnViewRequests.BackColor = Color.LightSkyBlue;
             btnViewMonthlyIncome.BackColor = Color.LightSkyBlue;
@@ -75,7 +75,7 @@ namespace BlockFlix_Application
             btnProfile.BackColor = Color.Khaki;
             btnLogout.BackColor = Color.LightGray;
 
-            btnViewRentalHistory.UseVisualStyleBackColor = false;
+            btnMovieLibrary.UseVisualStyleBackColor = false;
             btnViewRequests.UseVisualStyleBackColor = false;
             btnViewMonthlyIncome.UseVisualStyleBackColor = false;
             btnReviews.UseVisualStyleBackColor = false;

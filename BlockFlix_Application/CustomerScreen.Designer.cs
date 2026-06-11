@@ -48,9 +48,9 @@
             lblCustomer.Font = new Font("Segoe UI", 9F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             lblCustomer.Location = new Point(520, 23);
             lblCustomer.Name = "lblCustomer";
-            lblCustomer.Size = new Size(157, 20);
+            lblCustomer.Size = new Size(154, 20);
             lblCustomer.TabIndex = 0;
-            lblCustomer.Text = "My BlockFlix Rentals";
+            lblCustomer.Text = "My BlockFlix Library";
             // 
             // dgvMyBlockFlixRentals
             // 
