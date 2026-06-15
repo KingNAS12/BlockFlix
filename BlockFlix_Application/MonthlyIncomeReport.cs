@@ -9,6 +9,11 @@ using System.Windows.Forms;
 
 namespace BlockFlix_Application
 {
+    /// <summary>
+    /// This form displays a monthly income report for the BlockFlix application. 
+    /// It retrieves data from the database to show the rental income, replacement income, and total income for each month and year. 
+    /// The report is displayed in a DataGridView control on the form.
+    /// </summary>
     public partial class MonthlyIncomeReport : Form
     {
         private string connectionString; 
@@ -19,7 +24,9 @@ namespace BlockFlix_Application
             connectionString = conn;
             LoadReport(); 
         }
-
+        /// <summary>
+        /// Loads the monthly income report by executing a SQL query that retrieves rental and replacement income data from the database.
+        /// </summary>
         private void LoadReport()
         {
             string query = @"

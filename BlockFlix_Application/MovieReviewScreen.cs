@@ -3,6 +3,11 @@ using Microsoft.Data.SqlClient;
 
 namespace BlockFlix_Application
 {
+    /// <summary>
+    /// This form allows users to view various movie review reports based on data from the database. 
+    /// Users can select different report types from a dropdown menu, and the corresponding data will be displayed in a DataGridView. 
+    /// The reports include average movie ratings, actor ratings, customer ratings, and preferences by
+    /// </summary>
     public partial class MovieReviewScreen : Form
     {
 
@@ -13,6 +18,11 @@ namespace BlockFlix_Application
         {
             InitializeComponent();
         }
+        /// <summary>
+        /// Handles the Load event of the MovieReviewScreen form. It initializes the form's controls, including setting the title label, 
+        /// populating the report type combo box with available report options, and configuring the DataGridView for displaying report results. 
+        /// The combo box is set to a drop-down list style to prevent user input, and the DataGridView is configured to auto-size columns, be read-only, and allow full-row selection.
+        /// </summary>
 
         private void MovieReviewScreen_Load(object sender, EventArgs e)
         {
@@ -39,7 +49,11 @@ namespace BlockFlix_Application
             dgvReports.AllowUserToDeleteRows = false;
             dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
-
+        /// <summary>
+        /// Handles the click event of the Load Report button. It retrieves the selected report type from the combo box, 
+        /// constructs the appropriate SQL query based on the selection, and executes the query to fetch data from the database. 
+        /// The results are then displayed in a DataGridView. If any errors occur during database access, an error message is shown to the user.
+        /// </summary>
         private void btnLoadReport_Click(object sender, EventArgs e)
         {
             if (cmbReportType.SelectedItem == null)
@@ -71,6 +85,9 @@ namespace BlockFlix_Application
                 );
             }
         }
+        /// <summary>
+        /// Gets the SQL query for the specified report type.
+        /// </summary>
 
         private string GetReportQuery(string reportName)
         {

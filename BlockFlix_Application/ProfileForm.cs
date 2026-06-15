@@ -5,6 +5,12 @@ using Microsoft.Data.SqlClient;
 
 namespace BlockFlix_Application
 {
+    /// <summary>
+    /// ProfileForm is used for both customers and employees to view and edit their profile information. 
+    /// It is opened from HomeForm after login. It uses the userId and role passed from HomeForm to determine which profile to load and which fields to show. 
+    /// Customers can edit all their information including password, while employees can only edit their name and address. When the user clicks Save, 
+    /// the form validates the input and updates the database with the new information. If there are any errors during loading or saving, it shows an error message to the user.
+    /// </summary>
     public partial class ProfileForm : Form
     {
         private readonly string userId;
@@ -43,6 +49,9 @@ namespace BlockFlix_Application
             btnClose.Click += btnClose_Click;
             btnSave.Click += btnSave_Click;
         }
+        /// <summary>
+        /// When the form loads, it checks the role of the user. If the user is a customer, it loads the customer's profile information from the database and populates the form fields.
+        /// </summary>
 
         private void ProfileForm_Load(object sender, EventArgs e)
         {
@@ -86,7 +95,10 @@ namespace BlockFlix_Application
                 Close();
             }
         }
-
+        /// <summary>
+        /// The LoadCustomerProfile method retrieves the customer's profile information 
+        /// from the database using their account number (userId) and populates the form fields with the retrieved data.
+        /// </summary>
         private void LoadCustomerProfile()
         {
             string sql = @"
@@ -141,7 +153,10 @@ namespace BlockFlix_Application
                 MessageBox.Show("Could not load customer profile: " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// The LoadEmployeeProfile method retrieves the employee's profile information from the database 
+        /// using their employee ID (userId) and populates the form fields with the retrieved data.
+        /// </summary>
         private void LoadEmployeeProfile()
         {
             string sql = @"
@@ -206,7 +221,9 @@ namespace BlockFlix_Application
         {
             Close();
         }
-
+        /// <summary>
+        /// The ValidateProfileInput method checks the user input in the form fields to ensure they meet certain criteria before allowing the profile to be saved.
+        /// </summary>
         private bool ValidateProfileInput()
         {
             string firstName = txtFirstName.Text.Trim();
@@ -333,7 +350,11 @@ namespace BlockFlix_Application
 
             return true;
         }
-
+        /// <summary>
+        /// The SaveCustomerProfile method takes the input from the form fields and updates the customer's profile information in the database. 
+        /// If it's a new profile, it inserts a new record; otherwise, it updates the existing record. 
+        /// It also handles hashing the password for new profiles and shows a success or error message based on the outcome of the database operation.
+        /// </summary>
         private void SaveCustomerProfile()
         {
             string sql = "";
@@ -437,7 +458,9 @@ namespace BlockFlix_Application
                 MessageBox.Show("Could not update customer profile: " + ex.Message);
             }
         }
-
+        /// <summary>
+        /// The SaveEmployeeProfile method takes the input from the form fields and updates the employee's profile information in the database.
+        /// </summary>
         private void SaveEmployeeProfile()
         {
             string sql = @"

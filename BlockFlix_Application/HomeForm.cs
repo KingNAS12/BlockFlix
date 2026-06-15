@@ -4,6 +4,10 @@ using System.Windows.Forms;
 
 namespace BlockFlix_Application
 {
+    /// <summary>
+    /// Main Navigation Screen displayed after login
+    /// Displayes features of blockflix based on user role (customer or employee)
+    /// </summary>
     public partial class HomeForm : Form
     {
         private readonly string userId = "";
@@ -46,6 +50,9 @@ namespace BlockFlix_Application
             // Nothing needed here for now.
         }
 
+        /// <summary>
+        /// Configures the home page based on the user's role (customer or employee).
+        /// </summary>
         private void SetupHomePage()
         {
             lblWelcome.Text = $"Welcome {userId}";
@@ -150,7 +157,9 @@ namespace BlockFlix_Application
         {
             // Nothing needed here.
         }
-
+        /// <summary>
+        /// Opens a temporary screen with a message indicating that the feature is under development.
+        /// </summary>
         private void OpenTemporaryScreen(string title)
         {
             Form form = new Form();

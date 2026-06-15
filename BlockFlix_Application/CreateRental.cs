@@ -10,12 +10,19 @@ using System.Windows.Forms;
 
 namespace BlockFlix_Application
 {
+    /// <summary>
+    /// Form for creating a new rental order. Allows employee to select a movie and customer,
+    /// then creates the rental order in the database and updates movie availability.
+    /// </summary>
     public partial class CreateRental : Form
     {
 
         private string connectionString;
         private string employeeID;
 
+        /// <summary>
+        /// Helper class to represent movies in the ComboBox with a display text and value.
+        /// </summary>
         public class MovieItem()
         {
             public string MovieName { get; set; }
@@ -31,7 +38,9 @@ namespace BlockFlix_Application
                 }
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public class CustomerItem()
         {
             public string FirstName { get; set; }
@@ -50,7 +59,9 @@ namespace BlockFlix_Application
                 }
             }
         }
-
+        /// <summary>
+        /// Constructor for CreateRental form. Initializes the form, loads movies and customers into ComboBoxes,
+        /// </summary>
         public CreateRental(string employee, string con)
         {
             InitializeComponent();
@@ -67,6 +78,10 @@ namespace BlockFlix_Application
 
         }
 
+        /// <summary>
+        /// Loads available movies from the database and populates the movie ComboBox. 
+        /// Only movies with copies available > 0 are included.
+        /// </summary>
         private void LoadMovies()
         {
             List<MovieItem> movies = new List<MovieItem>();
@@ -100,7 +115,9 @@ namespace BlockFlix_Application
             comboBoxMovie.DisplayMember = "DisplayText";
             comboBoxMovie.ValueMember = "MovieID";
         }
-
+        /// <summary>
+        /// Loads customers from the database and populates the customer ComboBox.
+        /// </summary>
         private void LoadCustomers()
         {
             List<CustomerItem> customers = new List<CustomerItem>();
@@ -138,6 +155,9 @@ namespace BlockFlix_Application
             comboBoxCustomer.DisplayMember = "DisplayText";
             comboBoxCustomer.ValueMember = "AccountNumber";
         }
+        /// <summary>
+        /// Event handler for the "Create Rental" button click. Validates that a movie and customer are selected,
+        /// </summary>
 
         private void buttonCreateRental_Click(object sender, EventArgs e)
         {
@@ -171,6 +191,10 @@ namespace BlockFlix_Application
         {
 
         }
+        /// <summary>
+        /// Event handler for when the selected customer changes. 
+        /// If "New Customer" is selected, opens the ProfileForm to create a new customer.
+        /// </summary>
 
         private void comboBoxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -194,7 +218,9 @@ namespace BlockFlix_Application
                 profileForm.Show();
             }
         }
-
+        /// <summary>
+        /// Creates a new rental order in the database for the selected movie and customer.
+        /// </summary>
         private string CreateRentalOrder(string movieID, string accountNumber)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
