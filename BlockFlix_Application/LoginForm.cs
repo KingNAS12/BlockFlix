@@ -45,6 +45,11 @@ namespace BlockFlix_Application
                 MessageBox.Show("Please enter both username and password.");
                 return;
             }
+            else if (username == "E000000")
+            {
+                MessageBox.Show("Invalid username or password.");
+                return; 
+            }
 
             string query;
             string role;
