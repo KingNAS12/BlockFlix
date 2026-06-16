@@ -18,12 +18,12 @@ namespace BlockFlix_Application
         {
             InitializeComponent();
         }
+
         /// <summary>
         /// Handles the Load event of the MovieReviewScreen form. It initializes the form's controls, including setting the title label, 
         /// populating the report type combo box with available report options, and configuring the DataGridView for displaying report results. 
         /// The combo box is set to a drop-down list style to prevent user input, and the DataGridView is configured to auto-size columns, be read-only, and allow full-row selection.
         /// </summary>
-
         private void MovieReviewScreen_Load(object sender, EventArgs e)
         {
             lblTitle.Text = "Movie Review Report";
@@ -49,6 +49,7 @@ namespace BlockFlix_Application
             dgvReports.AllowUserToDeleteRows = false;
             dgvReports.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
+
         /// <summary>
         /// Handles the click event of the Load Report button. It retrieves the selected report type from the combo box, 
         /// constructs the appropriate SQL query based on the selection, and executes the query to fetch data from the database. 
@@ -85,10 +86,10 @@ namespace BlockFlix_Application
                 );
             }
         }
+
         /// <summary>
         /// Gets the SQL query for the specified report type.
         /// </summary>
-
         private string GetReportQuery(string reportName)
         {
             switch (reportName)

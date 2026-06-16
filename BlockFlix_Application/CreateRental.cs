@@ -39,7 +39,7 @@ namespace BlockFlix_Application
             }
         }
         /// <summary>
-        /// 
+        /// Helper class to represent customers in the ComboBox with a display text and value.
         /// </summary>
         public class CustomerItem()
         {
@@ -59,6 +59,7 @@ namespace BlockFlix_Application
                 }
             }
         }
+
         /// <summary>
         /// Constructor for CreateRental form. Initializes the form, loads movies and customers into ComboBoxes,
         /// </summary>
@@ -115,6 +116,7 @@ namespace BlockFlix_Application
             comboBoxMovie.DisplayMember = "DisplayText";
             comboBoxMovie.ValueMember = "MovieID";
         }
+
         /// <summary>
         /// Loads customers from the database and populates the customer ComboBox.
         /// </summary>
@@ -155,10 +157,10 @@ namespace BlockFlix_Application
             comboBoxCustomer.DisplayMember = "DisplayText";
             comboBoxCustomer.ValueMember = "AccountNumber";
         }
+
         /// <summary>
         /// Event handler for the "Create Rental" button click. Validates that a movie and customer are selected,
         /// </summary>
-
         private void buttonCreateRental_Click(object sender, EventArgs e)
         {
             if (comboBoxMovie.SelectedIndex == 0 || comboBoxCustomer.SelectedIndex == 0)
@@ -191,11 +193,11 @@ namespace BlockFlix_Application
         {
 
         }
+
         /// <summary>
         /// Event handler for when the selected customer changes. 
         /// If "New Customer" is selected, opens the ProfileForm to create a new customer.
         /// </summary>
-
         private void comboBoxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (comboBoxCustomer.SelectedIndex == 1) // "New Customer" selected
@@ -218,6 +220,7 @@ namespace BlockFlix_Application
                 profileForm.Show();
             }
         }
+
         /// <summary>
         /// Creates a new rental order in the database for the selected movie and customer.
         /// </summary>

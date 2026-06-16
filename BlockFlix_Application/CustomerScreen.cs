@@ -16,6 +16,7 @@ namespace BlockFlix_Application
         private bool showActive;
         private bool showReturned;
         private bool showOverdue;
+        
         public CustomerScreen(string accountNo, string conn)
         {
             InitializeComponent();
@@ -31,10 +32,18 @@ namespace BlockFlix_Application
             LoadRentals();
             loadQueue();
         }
+
+        /// <summary>
+        /// Handles the loading of the customer screen form. This method is intentionally left empty and exists to prevent missing event handler errors when the form loads.
+        /// </summary>
         private void CustomerScreen_Load(object sender, EventArgs e)
         {
             // Leave this empty. It is included to avoid missing CustomerScreen_Load errors.
         }
+
+        /// <summary>
+        /// Loads rental information into the rentals DataGridView. If no rental filters are selected, the table is cleared. Otherwise, rental data is retrieved and displayed based on the selected filters.
+        /// </summary>
         private void LoadRentals()
         {
             if (!showActive && !showReturned && !showOverdue)
@@ -44,6 +53,7 @@ namespace BlockFlix_Application
             }
             dgvMyBlockFlixRentals.DataSource = FetchRentals();
         }
+
         /// <summary>
         /// Fetches rental information for the customer based on the selected filters (active, returned, overdue) and returns it as a DataTable to be displayed in the DataGridView.
         /// </summary>
@@ -59,6 +69,7 @@ namespace BlockFlix_Application
                 return table;
             }
         }
+
         /// <summary>
         /// Builds the SQL query to fetch rental information based on the selected filters (active, returned, overdue). 
         /// The query retrieves rental details such as rental ID, movie name, checkout date, due date, return date, and a note indicating the rental status.
@@ -149,18 +160,19 @@ namespace BlockFlix_Application
             return query;
         }
 
+        /// <summary>
+        /// The following 3 functions handle changes to the checkboxes. Updates the respective rental filters and reloads the rental information displayed to the customer.
+        /// </summary>
         private void cbxActiveRental_CheckedChanged(object sender, EventArgs e)
         {
             showActive = cbxActiveRental.Checked;
             LoadRentals();
         }
-
         private void cbxReturned_CheckedChanged(object sender, EventArgs e)
         {
             showReturned = cbxReturned.Checked;
             LoadRentals();
         }
-
         private void cbxOverdue_CheckedChanged(object sender, EventArgs e)
         {
             showOverdue = cbxOverdue.Checked;
@@ -181,6 +193,10 @@ namespace BlockFlix_Application
             LoadQuery(query);
 
         }
+
+        /// <summary>
+        /// Executes the provided SQL query to retrieve queue information for the customer and displays the results in the queue DataGridView.
+        /// </summary>
         private void LoadQuery(string query)
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
@@ -194,6 +210,10 @@ namespace BlockFlix_Application
                 dgvMyBlockFlixQueue.DataSource = table;
             }
         }
+
+        /// <summary>
+        /// Loads all available movies from the database and dynamically creates buttons for each movie. Each button displays the movie name and the number of available copies, allowing the customer to request rentals by clicking on them.
+        /// </summary>
         private void LoadMovies()
         {
             string query = @"
@@ -226,6 +246,9 @@ namespace BlockFlix_Application
             }
         }
 
+        /// <summary>
+        /// Handles the click event for a movie button. Retrieves the selected movie's ID and sends a rental request for that movie.
+        /// </summary>
         private void MovieButton_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -236,6 +259,7 @@ namespace BlockFlix_Application
         private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
         {
         }
+
         /// <summary>
         /// Handles the rental request when a customer clicks on a movie button. It checks if there are available copies of the movie. If there are, it creates a new rental order for the customer. 
         /// If not, it adds the customer to the movie's queue. After processing the request, it refreshes the screen to reflect any changes in rentals and queues.
@@ -266,11 +290,11 @@ namespace BlockFlix_Application
             flowLayoutPanel1.Controls.Clear();
             RefreshScreen();
         }
+
         /// <summary>
         /// Creates a new rental order for the customer by generating a unique rental ID, inserting a new record into the RentalOrder table with the relevant details (account number, movie ID, employee ID, checkout date), 
         /// and updating the Movie table to decrease the available copies by one.
         /// </summary>
-
         private void CreateRental(SqlConnection conn, string movieID)
         {
             // Get the number of existing rentals
@@ -311,6 +335,7 @@ namespace BlockFlix_Application
             insertCmd.Parameters.AddWithValue("@movieID", movieID);
             insertCmd.ExecuteNonQuery();
         }
+
         /// <summary>
         /// Adds the customer to the movie's queue by first checking the current number of people in the queue for that movie. If the queue is full (more than 3 people), it shows a message to the customer.
         /// </summary>
@@ -359,6 +384,10 @@ namespace BlockFlix_Application
         {
 
         }
+
+        /// <summary>
+        /// Refreshes the customer screen by reloading the list of movies, the customer's rental information, and their current movie queue positions to ensure all displayed information is up to date.
+        /// </summary>
         private void RefreshScreen()
         {
             LoadMovies();

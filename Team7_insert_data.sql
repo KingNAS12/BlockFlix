@@ -373,6 +373,13 @@ INSERT INTO RentalOrder (rentalID, accountNumber, movieID, employeeID, movieRati
     ('R000079', 'C000010', 'M000028', 'E000005', NULL, 0, '2026-06-05', NULL),
     ('R000080', 'C000014', 'M000028', 'E000002', NULL, 0, '2026-06-05', NULL);
 
+-- Adjust sample rental dates relative to 2026-06-05 so that the dataset remains current.
+-- This ensures active rentals stay active and prevents all sample rentals from becoming overdue over time.
+UPDATE RentalOrder
+    SET checkoutDate = DATEADD(DAY, DATEDIFF(DAY, '2026-06-05', GETDATE()), checkoutDate),
+        returnDate = DATEADD(DAY, DATEDIFF(DAY, '2026-06-05', GETDATE()), returnDate);
+
+-- Note: This Movie Queue data is out of data with the new revised database design. Entries are not included in the sample dataset as manual updates are better for testing the queue.
 --Movie Queue
 --INSERT INTO MovieQueue (queueIndex, accountNumber, movieID) VALUES
 --    (1, 'C000001', 'M000002'),

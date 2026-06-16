@@ -157,6 +157,7 @@ namespace BlockFlix_Application
         {
             // Nothing needed here.
         }
+
         /// <summary>
         /// Opens a temporary screen with a message indicating that the feature is under development.
         /// </summary>

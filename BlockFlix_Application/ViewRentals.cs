@@ -7,7 +7,7 @@ using System.Windows.Forms;
 namespace BlockFlix_Application
 {
     /// <summary>
-    /// Form for viewing and managing rentals. Displays all rentals with filtering options for active, returned, and overdue rentals. 
+    /// Form for Employee to view and manage rentals. Displays all rentals with filtering options for active, returned, and overdue rentals. 
     /// </summary>
     public partial class ViewRentals : Form
     {
@@ -178,12 +178,12 @@ namespace BlockFlix_Application
             query = query + "ORDER BY r.rentalID DESC;";
             return query;
         }
+
         /// <summary>
         /// Event handler for when data binding to the DataGridView is complete. 
         /// Hides the raw "replacementFeeCharged" column from the database and ensures that the custom "ReturnMovie" and "ChargeReplacementFee" columns are always displayed at the end of the grid. 
         /// Also calls RefreshCustomColumns to update the values of the custom columns based on the newly bound data.
         /// </summary>
-
         private void DataGridView1_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             // Hide the raw DB column now that we have our checkbox mirror
@@ -199,6 +199,7 @@ namespace BlockFlix_Application
             dataGridView1.Columns["ChargeReplacementFee"].DisplayIndex = lastIndex;
             RefreshCustomColumns();
         }
+
         /// <summary>
         /// Updates the values of the custom "ReturnMovie" and "ChargeReplacementFee" columns for each row in the DataGridView based on the underlying data.
         /// </summary>
@@ -233,6 +234,7 @@ namespace BlockFlix_Application
             showOverdue = checkBoxOverdue.Checked;
             LoadRentals();
         }
+
         /// <summary>
         /// Event handler for when a cell's content is clicked in the DataGridView. 
         /// Determines if the click was on the "ReturnMovie" button or the "ChargeReplacementFee" checkbox and calls the appropriate handler method for each action. 
@@ -253,6 +255,7 @@ namespace BlockFlix_Application
             }
             LoadRentals();
         }
+
         /// <summary>
         /// Handles the logic for when the "Return" button is clicked for a rental.
         /// </summary>
@@ -266,10 +269,10 @@ namespace BlockFlix_Application
             UpdateQueue(movieID);
             GetRating(rentalID, movieID); 
         }
+
         /// <summary>
         /// Marks the specified rental as returned by setting the return date to the current date and increments the available copies for the associated movie.
         /// </summary>
-
         private void ReturnRental(string rentalID, string movieID)
         {
             string query = @"
@@ -290,6 +293,7 @@ namespace BlockFlix_Application
                 cmd.ExecuteNonQuery();
             }
         }
+
         /// <summary>
         /// After a movie is returned, checks if there is a queue for that movie and automatically creates a rental for the first customer in the queue,
         /// removes them from the queue, and shifts everyone else forward.
@@ -335,10 +339,10 @@ namespace BlockFlix_Application
                 updateCmd.ExecuteNonQuery();
             }
         }
+
         /// <summary>
         /// Automatically creates a rental order for the specified account and movie, assigning it to a default employee and setting the checkout date to the current date.
         /// </summary>
-
         private void AutoCreateOrder(string accountNumber, string movieID, SqlConnection conn)
         {
             // Get the number of existing rentals
@@ -377,18 +381,17 @@ namespace BlockFlix_Application
             insertCmd.Parameters.AddWithValue("@movieID", movieID);
             insertCmd.ExecuteNonQuery();
         }
+
         /// <summary>
         /// Handles the logic for when the "Charge Replacement Fee" checkbox is toggled for a rental.
         /// </summary>
-
         private void HandleReplacementFeeToggle(int rowIndex)
         {
             DataGridViewRow row = dataGridView1.Rows[rowIndex];
             string rentalID = row.Cells["rentalID"].Value.ToString();
             DateTime checkoutDate = Convert.ToDateTime(row.Cells["checkoutDate"].Value);
             bool currentValue = Convert.ToBoolean(row.Cells["ChargeReplacementFee"].Value);
-
-            // Toggling OFF is always allowed.
+            // Toggling OFF is always allowed (refunds the customer).
             // Toggling ON requires current date >= checkoutDate + 2 weeks.
             if (!currentValue && DateTime.Now < checkoutDate.AddDays(14))
             {
@@ -399,10 +402,10 @@ namespace BlockFlix_Application
             }
             bool newValue = !currentValue;
             UpdateReplacementFee(rentalID, newValue);
-
             // Reflect the confirmed value without a full reload
             row.Cells["ChargeReplacementFee"].Value = newValue;
         }
+
         /// <summary>
         /// Updates the replacement fee status for a given rental in the database. Sets the "replacementFeeCharged" bit to 1 if charge is true, or 0 if charge is false.
         /// </summary>

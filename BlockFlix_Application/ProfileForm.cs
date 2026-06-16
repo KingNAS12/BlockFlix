@@ -22,12 +22,10 @@ namespace BlockFlix_Application
         public ProfileForm()
         {
             InitializeComponent();
-
             userId = "";
             role = "";
             connectionString = "";
             newProfile = false;
-
             WireUpButtons();
         }
 
@@ -49,6 +47,7 @@ namespace BlockFlix_Application
             btnClose.Click += btnClose_Click;
             btnSave.Click += btnSave_Click;
         }
+
         /// <summary>
         /// When the form loads, it checks the role of the user. If the user is a customer, it loads the customer's profile information from the database and populates the form fields.
         /// </summary>
@@ -57,7 +56,6 @@ namespace BlockFlix_Application
         {
             txtUserId.Text = userId;
             txtRole.Text = role;
-
             if (role == "Customer")
             {
                 if (newProfile)
@@ -95,6 +93,7 @@ namespace BlockFlix_Application
                 Close();
             }
         }
+
         /// <summary>
         /// The LoadCustomerProfile method retrieves the customer's profile information 
         /// from the database using their account number (userId) and populates the form fields with the retrieved data.
@@ -153,6 +152,7 @@ namespace BlockFlix_Application
                 MessageBox.Show("Could not load customer profile: " + ex.Message);
             }
         }
+
         /// <summary>
         /// The LoadEmployeeProfile method retrieves the employee's profile information from the database 
         /// using their employee ID (userId) and populates the form fields with the retrieved data.
@@ -221,6 +221,7 @@ namespace BlockFlix_Application
         {
             Close();
         }
+
         /// <summary>
         /// The ValidateProfileInput method checks the user input in the form fields to ensure they meet certain criteria before allowing the profile to be saved.
         /// </summary>
@@ -350,6 +351,7 @@ namespace BlockFlix_Application
 
             return true;
         }
+
         /// <summary>
         /// The SaveCustomerProfile method takes the input from the form fields and updates the customer's profile information in the database. 
         /// If it's a new profile, it inserts a new record; otherwise, it updates the existing record. 
@@ -458,6 +460,7 @@ namespace BlockFlix_Application
                 MessageBox.Show("Could not update customer profile: " + ex.Message);
             }
         }
+
         /// <summary>
         /// The SaveEmployeeProfile method takes the input from the form fields and updates the employee's profile information in the database.
         /// </summary>

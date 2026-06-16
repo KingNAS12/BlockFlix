@@ -37,13 +37,12 @@ namespace BlockFlix_Application
         {
 
         }
-
+        
         /// <summary>
         /// Authenticates a customer or employee throught login button
         /// Validates user input, and verifies hashed passwords against the database
-        /// Openes the HomeForm with the appropriate role and user information upon successful login
-        /// </summary>  
-
+        /// Opens the HomeForm with the appropriate role and user information upon successful login
+        /// <summary>  
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // Read user input from textboxes and trim whitespace
@@ -67,7 +66,6 @@ namespace BlockFlix_Application
             if (username.StartsWith("C"))
             {
                 role = "Customer";
-
                 /// Hashing and injection prevention:
                 /// Using SQL Server's Hashbytes function with the SHA2_256 algorithm -
                 /// - to securely compare the hashed password input with the stored hashed password in the database
